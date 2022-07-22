@@ -1,0 +1,181 @@
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org">
+
+<head>
+<head th:replace="snippets.html :: name_head"></head>
+<body>
+	<nav th:replace="snippets.html :: name_navbar"></nav>
+	<div class="container">
+		<blockquote class="blockquote text-center">
+			<h2 class="mb-0">Inventory</h2>
+		</blockquote>
+		<div class="row">
+			<div class="col-12">
+				<div class="col-sm-4" id="status-bar"></div>
+				<form class="form" id="add-inventory-form"
+					onsubmit="return addInventory();">
+					<div class="form-group">
+						<div class="input-group-prepend"
+							style="width: 188px; display: inline-block">
+							<label class="input-text" for="inputBC">Barcode<span
+								style="color: red;"> *</span></label>
+						</div>
+						<select class="form-select" required name="productId"
+							id="inputProduct"
+							style="width: 183px; height: 38px; display: inline-block">
+							<option value="none">Select a Barcode</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="inputInventory" class="col-sm-2 col-form-label"
+							style="padding-left: 0px; display: inline-block">Inventory<span
+							style="color: red;"> *</span></label>
+						<div class="col-sm-10"
+							style="padding-left: 0px; display: inline-block; width: 200px">
+							<input type="text" class="form-control" name="quantity"
+								id="inputInventory" placeholder="Enter Inventory" required>
+						</div>
+					</div>
+
+					<input type="submit" class="btn btn-primary" value="Add Inventory">
+					&nbsp;
+					<button type="button" class="btn btn-primary" id="refresh-data">Refresh</button>
+					&nbsp;
+					<button type="button" class="btn btn-primary" id="upload-inventory">Upload
+						Inventory</button>
+
+				</form>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-4" id="status-bar"></div>
+			<!-- Table -->
+			<div class="col-12">
+				<table class="table table-striped" id="inventory-table">
+					<thead>
+						<tr>
+							<th scope="col">Product Name</th>
+							<th scope="col">Barcode</th>
+							<th scope="col">Inventory</th>
+							<th scope="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+			</div>
+			<div class="container" align="right">
+				<div id="pagination-wrapper" style="margin-right: 0px;"></div>
+			</div>
+
+		</div>
+		<div class="modal" tabindex="-1" role="dialog"
+			id="edit-inventory-modal" data-backdrop="static"
+			data-keyboard="false">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Edit Inventory</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form class="form-inline" id="edit-inventory-form"
+							onsubmit="return updateInventory1();">
+
+							<div class="col-12">
+
+								<div class="input-group">
+									<div class="input-group-prepend" style="width: 135px;">
+										<label class="input-text" for="editProduct">Product<span
+											style="color: red;"> *</span></label>
+									</div>
+									<select class="form-control" disabled name="productId"
+										id="editProduct" style="width: 301px; height: 38px">
+									</select>
+								</div>
+							</div>
+
+							<div class="col-12">
+								<br>
+								<div class="input-group">
+									<div class="input-group-prepend" style="width: 135px;">
+										<span class="input-text" id=""><label>Inventory<span
+												style="color: red;"> *</span></label></span>
+									</div>
+									<input type="number" min="1" step="1" class="form-control"
+										id="inputInventory" name="quantity"
+										placeholder="Enter Inventory" required>
+								</div>
+							</div>
+							<input type="hidden" name="inventoryId">
+							<div class="modal-footer" style="float: right">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Cancel</button>
+								<input type="submit" class="btn btn-primary" value="Update">
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal" tabindex="-1" role="dialog"
+		id="upload-inventory-modal" data-backdrop="static"
+		data-keyboard="false">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" id="MyModal">
+
+				<div class="modal-header">
+					<h5 class="modal-title">Upload Inventory</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+					<div class="inventory-file">
+						<input type="file" class="form-control" id="inventoryFile"
+							accept=".tsv">
+					</div>
+					<a th:href="@{/static/inventory.tsv}" target="_blank">Download
+						Sample</a> <br> Rows: <span id="rowCountInventory">0</span>,
+					Processed: <span id="processCountInventory">0</span>, Errors: <span
+						id="errorCountInventory">0</span>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary"
+						id="process-data-inventory">Upload</button>
+					<button type="button" class="btn btn-warning"
+						id="download-errors-inventory">Download Errors</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Container end-->
+	<footer th:replace="snippets.html :: name_footer"></footer>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+	<script th:src="@{/static/inventory.js}">
+		
+	</script>
+</body>
+
+</html>

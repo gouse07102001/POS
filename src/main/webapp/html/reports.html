@@ -1,0 +1,117 @@
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org">
+
+<head th:replace="snippets.html :: name_head">
+</head>
+
+<body>
+
+
+	<nav th:replace="snippets.html :: name_navbar"></nav>
+	<div class="container">
+
+		<section>
+			<blockquote class="blockquote text-center">
+				<h2 class="mb-0">Reports</h2>
+			</blockquote>
+			<div style="left: 20%" class="col-sm-4"></div>
+			<div class="row">
+				<h3 style="padding-left: 14px">Sales Report</h3>
+				<div class="col-sm-4" id="status-bar"></div>
+
+				<form class="form-inline" id="report-form">
+
+					<div class="col-12">
+						<br>
+						<div class="input-group">
+							<div class="input-group-prepend" style="width: 135px;">
+								<span class="input-text"><label>Start Date<span
+										style="color: red;"> *</span></label></span>
+							</div>
+							<input type="date" class="form-control" name="startDate"
+								id="inputStartDate" placeholder="Enter Start Date" required>
+						</div>
+					</div>
+
+
+					<div class="col-12">
+						<br>
+						<div class="input-group">
+							<div class="input-group-prepend" style="width: 135px;">
+								<span class="input-text"><label>End Date<span
+										style="color: red;"> *</span></label></span>
+							</div>
+							<input type="date" class="form-control" name="endDate"
+								id="inputEndDate" placeholder="Enter enddate" required>
+						</div>
+					</div>
+
+					<div class="col-12">
+						<br>
+						<div class="input-group">
+							<div class="input-group-prepend" style="width: 135px;">
+								<span class="input-text">Brand-Category</span>
+							</div>
+							<select class="form-control" id="select-brand-category"
+								aria-label="Default select example">
+								<option selected value="">Select Brand-Category</option>
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="row mt-5">
+				<div class="col">
+
+					<button type="button" class="btn btn-primary" id="sales-report">Download
+						Sales Report</button>
+				</div>
+			</div>
+
+			<p>
+				<br>
+			</p>
+		</section>
+		<section>
+			<hr
+				style="height: 2px; border-width: 0; color: gray; background-color: gray">
+			<h3>Inventory Report</h3>
+			<div class="row mt-5">
+				<div class="col">
+					<button type="button" class="btn btn-primary" id="inventory-report">Download
+						Inventory Report</button>
+				</div>
+			</div>
+			<p>
+				<br>
+			</p>
+		</section>
+		<hr
+			style="height: 2px; border-width: 0; color: gray; background-color: gray">
+		<h3>Brand Report</h3>
+
+		<div class="row mt-5">
+			<div class="col">
+				<button type="button" class="btn btn-primary" id="brand-report">Download
+					Brand Report</button>
+			</div>
+		</div>
+
+	</div>
+	<footer th:replace="snippets.html :: name_footer"></footer>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+	<script th:src="@{/static/reports.js}">
+		
+	</script>
+
+</body>
+
+</html>

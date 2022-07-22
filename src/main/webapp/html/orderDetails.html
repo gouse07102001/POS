@@ -1,0 +1,123 @@
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org">
+
+<head th:replace="snippets.html :: name_head">
+</head>
+
+<body>
+
+
+	<nav th:replace="snippets.html :: name_navbar"></nav>
+	<div class="container">
+
+		<blockquote class="blockquote text-center">
+			<h3 class="mb-0">View Orders</h3>
+		</blockquote>
+
+		<!-- Top row with form-->
+
+		<!-- Order View Modal -->
+		<div class="modal" tabindex="-1" role="dialog" id="order-view-modal"
+			data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content container">
+					<div class="modal-header">
+						<h5 class="modal-title">View Order</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">x</span>
+						</button>
+					</div>
+
+					<div class="row">&nbsp;</div>
+					<div class="input-group">
+						<div class="input-group-prepend" style="width: 135px; padding-left:16px">
+							<span class="input-text">Order Id</span>
+						</div>
+						<input id="id" disabled>
+					</div>
+
+					<div class="row">&nbsp;</div>
+					<div class="input-group">
+						<div class="input-group-prepend" style="width: 135px; padding-left:16px">
+							<span class="input-text">Ordered At</span>
+						</div>
+						<input id="time" disabled>
+					</div>
+
+					<div class="row">&nbsp;</div>
+
+					<!-- Table -->
+					<div class="col-12">
+						<div style="height: 150px; overflow: auto">
+							<table class="table table-striped" id="order-table">
+								<thead
+									style="position: sticky; top: 0; z-index: 1; background: #fff;">
+									<tr>
+										<th scope="col">Barcode</th>
+										<th scope="col">Quantity</th>
+										<th scope="col">S.P</th>
+										<th scope="col">Amount</th>
+									</tr>
+								</thead>
+								<tbody id="order-table-body">
+								</tbody>
+							</table>
+						</div>
+						<br>
+						<div class="input-group">
+							<div class="input-group-prepend" style="width: 135px;">
+								<span class="input-text">Total Amount</span>
+							</div>
+							<input id="total" disabled>
+						</div>
+						<br>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Blank Row -->
+		<div class="row">&nbsp;</div>
+		<div class="row">
+
+			<!-- Table -->
+			<div class="col-12">
+				<table class="table table-striped" id="orders-table">
+					<thead>
+						<tr>
+							<th scope="col">Order ID</th>
+							<th scope="col">Ordered At</th>
+							<th scope="col">Bill Amount</th>
+							<th scope="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody id=orders-table-body>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="container" align="right">
+			<div id="pagination-wrapper" style="margin-right: 0px;"></div>
+		</div>
+
+	</div>
+	<!-- Container end-->
+	<footer th:replace="snippets.html :: name_footer"></footer>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+	<script th:src="@{/static/orderDetails.js}">
+		
+	</script>
+
+</body>
+
+</html>
