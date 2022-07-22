@@ -180,6 +180,12 @@ public class ProductDto {
         if (form.getMrp() < 0) {
         	return("MRP cannot be negative");
         }
+        if(form.getBarcode().length()>255) {
+        	return "Maximum limit exceeded for Barcode";
+        }
+        if(form.getproductName().length()>255) {
+        	return "Maximum limit exceeded for Name";
+        }
 		return null;
     }
 

@@ -174,9 +174,9 @@ public class OrderDto {
             Element product_name = document.createElement("name");
             product_name.appendChild(document.createTextNode(p.getProductName()));
             product.appendChild(product_name);
-            Element barcode = document.createElement("barcode");
-            barcode.appendChild(document.createTextNode(p.getBarcode()));
-            product.appendChild(barcode);
+//            Element barcode = document.createElement("barcode");
+//            barcode.appendChild(document.createTextNode(p.getBarcode()));
+//            product.appendChild(barcode);
             Element qty = document.createElement("qty");
             qty.appendChild(document.createTextNode(Integer.toString(data.getQuantity())));
             product.appendChild(qty);

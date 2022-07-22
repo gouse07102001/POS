@@ -112,7 +112,7 @@ public class BrandDto {
 	}
 	
 	
-	private boolean isValid(BrandForm d) {//TODO change the methode name
+	private boolean isValid(BrandForm d) {
 		List<BrandPojo> p = service.getAll();
 		for(BrandPojo i:p)
 		{
@@ -128,6 +128,10 @@ public class BrandDto {
 		}
 		else if(d.getCategory() == null || d.getCategory().isEmpty())
 			return "Category Can't be empty";
+		else if(d.getBrand().length()>256)
+			return "Maximum limit exceeded for Brand";
+		else if(d.getCategory().length()>256)
+			return "Maximum limit exceeded for Category";
 		return null;
 	}
 

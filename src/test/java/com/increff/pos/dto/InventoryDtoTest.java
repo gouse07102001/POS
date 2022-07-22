@@ -122,7 +122,7 @@ public class InventoryDtoTest extends AbstractUnitTest {
         b.setBrand("nestle");
         b.setCategory("dairy");
         brandService.add(b);
-        //System.out.println("Invnetory Test getInvPojo rand" + b.getId());
+        //System.out.println("Inventory Test getInvPojo rand" + b.getId());
         double mrp = 10.25;
         p.setBarcode(barcode);
         p.setBrandCategory(b.getBrandId());
