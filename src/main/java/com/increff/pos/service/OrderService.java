@@ -49,7 +49,7 @@ public class OrderService {
     public OrderItemsPojo getCheck(Integer id) throws Exception {
         OrderItemsPojo p = dao.select(id);
         if (p == null) {
-            throw new ApiException("Order with given ID does not exit, id: " + id);
+            throw new ApiException("Order with given ID does not exist, id: " + id);
         }
         return p;
     }

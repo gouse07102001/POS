@@ -11,7 +11,7 @@ import com.increff.pos.model.SalesReportData;
 import com.increff.pos.model.SalesReportItem;
 
 @Service
-public class ReportService { //TODO to remove this ReportService
+public class ReportService { 
 
     @Autowired
     private ReportDao dao;

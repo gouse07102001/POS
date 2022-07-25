@@ -232,7 +232,6 @@ function resetUploadDialogInventory() {
 
 function updateUploadDialogInventory() {
 	$('#rowCountInventory').html("" + fileDataInventory.length);
-	$('#processCountInventory').html("" + 0);
 	$('#errorCountInventory').html("" + errorDataInventory.length);
 }
 

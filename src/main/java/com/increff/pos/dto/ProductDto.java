@@ -23,7 +23,8 @@ public class ProductDto {
 	
 	@Autowired
     private BrandService brandService;
-	@Transactional
+	
+	
 	public void add(ProductForm form) throws Exception {
 		
 		String error = validateProductForm(form);
@@ -37,7 +38,7 @@ public class ProductDto {
 			service.add(convert(form));
 		}
 	}
-	@Transactional
+
 	public void addAll(List<ProductForm> form) throws Exception {
 		List<ProductPojo> pojo = new ArrayList<ProductPojo>();
 		Integer index=0;
@@ -86,7 +87,7 @@ public class ProductDto {
 		}
 		return convert(p);
 	}
-	@Transactional(readOnly=true)
+
 	public List<ProductData> getAll() {
 		// TODO Auto-generated method stub
 		List<ProductPojo> list = service.getAll();
@@ -98,10 +99,9 @@ public class ProductDto {
 		return list_brandData;
 	}
 	public void update(Integer id, ProductForm f) throws Exception {
-		// TODO Auto-generated method stub
 		ProductPojo s = service.getCheckBarcode(f.getBarcode());
 		if(s != null && s.getProductId()!=id) {
-			throw new ApiException("Barcode Already Exist");
+			throw new ApiException("Barcode already exist");
 		}
         brandService.getCheck(f.getBrandCategory());
         String error = validateProductForm(f);

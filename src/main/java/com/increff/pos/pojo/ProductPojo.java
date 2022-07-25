@@ -14,10 +14,13 @@ public class ProductPojo {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer productId;
-	@Column(unique=true)
+	@Column(unique=true,nullable = false)
 	private String barcode;
+	@Column(nullable = false)
 	private Integer brandCategory;
+	@Column(nullable = false)
 	private String productName;
+	@Column(nullable = false)
 	private Double mrp;
 	
 	public Integer getProductId() {

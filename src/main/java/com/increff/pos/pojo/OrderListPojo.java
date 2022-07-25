@@ -1,5 +1,6 @@
 package com.increff.pos.pojo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,9 +18,13 @@ public class OrderListPojo {
 		public void setOrderListId(Integer orderListId) {
 			this.orderListId = orderListId;
 		}
+		@Column(nullable = false)
 		private String productName;
+		@Column(nullable = false)
 		private String barcode;
+		@Column(nullable = false)
 		private Integer quantity;
+		@Column(nullable = false)
 		private Integer productId;
 		public Integer getProductId() {
 			return productId;

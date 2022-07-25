@@ -286,7 +286,6 @@ function resetUploadDialog() {
 
 function updateUploadDialog() {
 	$('#rowCount').html("" + fileData.length);
-	$('#processCount').html("" + fileData.length);
 	$('#errorCount').html("" + errorData.length);
 }
 

@@ -31,7 +31,7 @@
 						Ordered At-
 						<xsl:value-of select="time" />
 					</fo:block>
-					<fo:block font-size="10pt">
+					<fo:block font-size="10pt" space-after="10mm">
 						<fo:table table-layout="fixed" width="100%"
 							border-collapse="separate">
 							<fo:table-column column-width="2cm" />
@@ -73,9 +73,11 @@
 							</fo:table-body>
 						</fo:table>
 					</fo:block>
+					
 					<fo:block font-size="15pt" font-family="Helvetica"
-						text-align="right" color="black" font-weight="bold"
+						text-align="left" color="black" font-weight="bold"
 						space-after="10mm">
+						
 						Total:
 						<xsl:value-of select="totalAmount" />
 					</fo:block>
@@ -87,7 +89,7 @@
 		<fo:table-row>
 			<fo:table-cell border="1pt solid black"
 				xsl:use-attribute-sets="tableBorder">
-				<fo:block text-align="left" font-size="15pt">
+				<fo:block text-align="right" font-size="15pt">
 					<xsl:value-of select="sno" />
 				</fo:block>
 			</fo:table-cell>
@@ -101,13 +103,13 @@
 
 			<fo:table-cell border="1pt solid black"
 				xsl:use-attribute-sets="tableBorder">
-				<fo:block text-align="left" font-size="15pt">
+				<fo:block text-align="right" font-size="15pt">
 					<xsl:value-of select="qty" />
 				</fo:block>
 			</fo:table-cell>
 			<fo:table-cell border="1pt solid black"
 				xsl:use-attribute-sets="tableBorder">
-				<fo:block text-align="left" font-size="15pt">
+				<fo:block text-align="right" font-size="15pt">
 					<xsl:value-of select="mrp" />
 				</fo:block>
 			</fo:table-cell>

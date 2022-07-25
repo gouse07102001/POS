@@ -211,7 +211,7 @@ function errorDisplay(template, message){
             text:  message,
             close: false,
             style: {
-                background: "linear-gradient(to right, #000fff, #000fff)",
+                background: "linear-gradient(to right, #FFE933, #FFE933)",
               },
             duration: 3000
         }).showToast();

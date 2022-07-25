@@ -2,6 +2,7 @@ package com.increff.pos.dto;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -39,6 +40,17 @@ public class InventoryDtoTest extends AbstractUnitTest {
         InventoryForm inventoryForm = getInventoryFormTest();
 
         inventoryDto.add(inventoryForm);
+        Integer inventoryId = inventoryDto.getIdByBarcodeForSearch(inventoryForm.getBarcode());
+        InventoryPojo inventoryPojoFinal = inventoryDto.get(inventoryId);
+        assertEquals(inventoryForm.getQuantity(), inventoryPojoFinal.getQuantity());
+    }
+    
+    @Test
+    public void testAddAll() throws Exception {
+        InventoryForm inventoryForm = getInventoryFormTest();
+        List<InventoryForm> forms = new ArrayList<InventoryForm>();
+        forms.add(inventoryForm);
+        inventoryDto.addAll(forms);
         Integer inventoryId = inventoryDto.getIdByBarcodeForSearch(inventoryForm.getBarcode());
         InventoryPojo inventoryPojoFinal = inventoryDto.get(inventoryId);
         assertEquals(inventoryForm.getQuantity(), inventoryPojoFinal.getQuantity());

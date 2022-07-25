@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -174,9 +175,6 @@ public class OrderDto {
             Element product_name = document.createElement("name");
             product_name.appendChild(document.createTextNode(p.getProductName()));
             product.appendChild(product_name);
-//            Element barcode = document.createElement("barcode");
-//            barcode.appendChild(document.createTextNode(p.getBarcode()));
-//            product.appendChild(barcode);
             Element qty = document.createElement("qty");
             qty.appendChild(document.createTextNode(Integer.toString(data.getQuantity())));
             product.appendChild(qty);
@@ -193,7 +191,7 @@ public class OrderDto {
         totalPrice.appendChild(document.createTextNode(Double.toString(sum)));
         root.appendChild(totalPrice);
         Element time = document.createElement("time");
-        time.appendChild(document.createTextNode(service.getCheckOrder(id).getTime().toString()));
+        time.appendChild(document.createTextNode(service.getCheckOrder(id).getTime().truncatedTo(ChronoUnit.SECONDS).toString()));
         root.appendChild(time);
 
 

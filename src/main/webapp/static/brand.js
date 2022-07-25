@@ -248,15 +248,14 @@ function uploadRows() {
 			var string = exception.substring(index + 1, exception.length)
 			var value = parseInt(string, 10)
 			let str = exception.substring(0, index)
+			processCount=value
 			var row = fileData[value];
 			value++
 			row.error = str + " in Line number " + value;
-			console.log(row)
 			errorData.push(row);
 			updateUploadDialog()
 			errorDisplay('danger', row.error)
 			getBrandList();
-			//uploadRows();
 		}
 	});
 
@@ -290,7 +289,6 @@ function writeFileData(arr) {
 
 function updateUploadDialog() {
 	$('#rowCount').html("" + fileData.length);
-	$('#processCount').html("" + fileData.length);
 	$('#errorCount').html("" + errorData.length);
 }
 

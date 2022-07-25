@@ -22,9 +22,9 @@ public class InventoryDto {
 	private InventoryService service;
 
 	@Autowired
-	ProductService productService; // TODO to add modifier. and to use only one service in one DTO
+	ProductService productService;
 
-	@Transactional
+	
 	public void add(InventoryForm form) throws Exception {
 		// TODO Auto-generated method stub
 		ProductPojo p = productService.getBarcodeById(form.getProductId());
@@ -42,7 +42,7 @@ public class InventoryDto {
 		service.add(i);
 	}
 
-	@Transactional
+	
 	public void addAll(List<InventoryForm> form) throws Exception {
 		List<InventoryPojo> pojo = new ArrayList<InventoryPojo>();
 		Integer index = 0;
@@ -70,7 +70,7 @@ public class InventoryDto {
 		return service.get(inventoryId);
 	}
 
-	@Transactional(readOnly = true)
+	
 	public List<InventoryData> getAll() {
 		// TODO Auto-generated method stub
 		List<InventoryPojo> list = service.getAll();
@@ -81,7 +81,7 @@ public class InventoryDto {
 		return list2;
 	}
 
-	@Transactional
+
 	public void update(Integer id, InventoryForm f) throws Exception {
 		// TODO Auto-generated method stub
 		String s = isNotValidQuantity(f.getQuantity());
@@ -96,14 +96,14 @@ public class InventoryDto {
 	public Integer getIdByBarcode(String barcode) throws Exception {
 		InventoryPojo i = service.getIdByBarcode(barcode);
 		if (i == null)
-			throw new ApiException("Product Doesnot Exisits");
+			throw new ApiException("Product Doesnot Exist");
 		return i.getInventoryId();
 	}
 
 	public InventoryPojo getByBarcode(String barcode) throws Exception {
 		InventoryPojo i = service.getIdByBarcode(barcode);
 		if (i == null)
-			throw new ApiException("Product Doesnot Exisits");
+			throw new ApiException("Product Doesnot Exist");
 		return i;
 	}
 
@@ -146,7 +146,7 @@ public class InventoryDto {
 	public Integer getIdByBarcodeForSearch(String barcode) throws Exception {
 		InventoryPojo i = service.getIdByBarcode(barcode);
 		if (i == null)
-			throw new ApiException("Barcode Does not Exists");
+			throw new ApiException("Barcode Does not Exist");
 		return i.getInventoryId();
 	}
 	

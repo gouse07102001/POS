@@ -2,17 +2,17 @@ package com.increff.pos.dto;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.increff.pos.service.ApiException;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.increff.pos.model.BrandData;
 import com.increff.pos.model.BrandForm;
 import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.service.AbstractUnitTest;
+import com.increff.pos.service.ApiException;
 import com.increff.pos.service.BrandService;
 import com.increff.pos.util.TestDataUtil;
 
@@ -37,6 +37,8 @@ public class BrandDtoTest extends AbstractUnitTest {
         assertEquals("nestle", brandPojo.getBrand());
         assertEquals("dairy", brandPojo.getCategory());
     }
+    
+   
 
     //  Test for getting a brand
     @Test

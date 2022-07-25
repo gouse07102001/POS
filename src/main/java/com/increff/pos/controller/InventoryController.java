@@ -32,7 +32,7 @@ public class InventoryController {
 	
 	@ApiOperation(value = "Adds List of Inventory")
 	@RequestMapping(path = "/api/inventory/list", method = RequestMethod.POST)
-	public void add(@RequestBody List<InventoryForm> form) throws Exception {
+	public void addAll(@RequestBody List<InventoryForm> form) throws Exception {
 		dto.addAll(form);
 	}
 

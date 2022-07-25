@@ -1,6 +1,7 @@
 
 package com.increff.pos.pojo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +25,9 @@ public class BrandPojo {
 	public void setBrandId(Integer brandId) {
 		this.brandId = brandId;
 	}
+	@Column(nullable = false)
 	private String brand;
+	@Column(nullable = false)
 	private String category;
 	
 	

@@ -18,7 +18,7 @@ public class BrandDto {
 	@Autowired
 	private BrandService service;
 	
-	@Transactional
+
 	public void add(BrandForm form)throws Exception {
 		// TODO Auto-generated method stub
 		
@@ -35,7 +35,6 @@ public class BrandDto {
 		}
 	}
 
-	@Transactional
 	public void addAll(List<BrandForm> form) throws Exception {
 		// TODO Auto-generated method stub
 		List<BrandPojo> pojo = new ArrayList<BrandPojo>();
@@ -61,13 +60,14 @@ public class BrandDto {
 		BrandPojo d = service.get(brandId);
 		return convert(d);
 	}
-	@Transactional(readOnly=true)
+
 	public BrandData getCheck(String brand, String category) throws Exception {
 		// TODO Auto-generated method stub
 		BrandPojo p = service.getCheck(brand, category);
 		return convert(p);
 	}
-	@Transactional(readOnly=true)//TODO to remove transactional in all DTO's
+	
+	
 	public List<BrandData> getAll() {
 		// TODO Auto-generated method stub
 		List<BrandPojo> list = service.getAll();
@@ -136,7 +136,7 @@ public class BrandDto {
 	}
 
 	public List<String> getAllBrandCategory() {
-		// TODO Auto-generated method stub
+		
 		return service.getAllBrandCategory();
 	}
 	
@@ -145,7 +145,7 @@ public class BrandDto {
         List<BrandPojo> all = service.getAll();
         for (BrandPojo brand : all) {
             if (brand.getBrand().equals(p.getBrand()) && brand.getCategory().equals(p.getCategory())) {
-                throw new ApiException("Brand Category Pair Already Exits");
+                throw new ApiException("Brand Category pair already exits");
             }
         }
 

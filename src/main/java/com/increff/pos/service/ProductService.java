@@ -25,7 +25,7 @@ public class ProductService {
 		normalize(p);
 		dao.insert(p);
 	}
-	
+	@Transactional
 	public void addAll(List<ProductPojo> pojo) {
 		for(ProductPojo iter:pojo) {
 			normalize(iter);
@@ -77,7 +77,7 @@ public class ProductService {
 		}
         ProductPojo p = dao.selectByParam(barcode);
         if (p == null) {
-            throw new ApiException("Barcode doesnot Exists");
+            throw new ApiException("Barcode doesnot exist");
         }
         return p;
     }
@@ -123,7 +123,7 @@ public class ProductService {
     public ProductPojo checkBarcode(String barcode) throws Exception {
         ProductPojo p = dao.selectByBarcode(barcode);
         if (p != null) {
-            throw new ApiException("Barcode Already Exists");
+            throw new ApiException("Barcode already exist");
         }
         return p;
     }
@@ -132,7 +132,7 @@ public class ProductService {
     public ProductPojo getUsingBarcode(String barcode) throws Exception {
         ProductPojo p = dao.selectByBarcode(barcode);
         if (p == null) {
-            throw new ApiException("Inventory with this barcode does not exist");
+            throw new ApiException("Inventory with this Barcode does not exist");
         }
         return p;
     }

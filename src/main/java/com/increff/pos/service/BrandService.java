@@ -23,11 +23,13 @@ public class BrandService {
 		normalize(p);
 		dao.insert(p);
 	}
-	public void addAll(List<BrandPojo> pojo) {
+	
+	@Transactional
+	public void addAll(List<BrandPojo> pojos) {
 		// TODO Auto-generated method stub
-		for(BrandPojo iter:pojo) { //TODO to change the name iter
-			normalize(iter);
-			dao.insert(iter);
+		for (BrandPojo pojo : pojos) {
+			normalize(pojo);
+			dao.insert(pojo);
 		}
 	}
 
@@ -41,7 +43,7 @@ public class BrandService {
 		return dao.selectAll();
 	}
 
-	@Transactional(rollbackOn  = ApiException.class)
+	@Transactional(rollbackOn = ApiException.class)
 	public void update(Integer brandId, BrandPojo p) throws Exception {
 		normalize(p);
 		BrandPojo ex = getCheck(brandId);
@@ -58,17 +60,18 @@ public class BrandService {
 		}
 		return p;
 	}
-	
+
 	@Transactional
-	public BrandPojo getCheck(String brand,String category) throws Exception {
+	public BrandPojo getCheck(String brand, String category) throws Exception {
 		BrandPojo p = dao.select(brand.toLowerCase(), category.toLowerCase());
 		if (p == null) {
-			throw new ApiException("Brand and Category with given names does not exist, brand: " + brand+" category: "+category);
+			throw new ApiException(
+					"Brand and Category with given names does not exist, brand: " + brand + " category: " + category);
 		}
 		return p;
 	}
 
-	private static void normalize(BrandPojo p) { 
+	private static void normalize(BrandPojo p) {
 		p.setBrand(p.getBrand().toLowerCase().trim());
 		p.setCategory(p.getCategory().toLowerCase().trim());
 	}
@@ -77,12 +80,10 @@ public class BrandService {
 		List<BrandPojo> pojos = new ArrayList<BrandPojo>();
 		pojos = getAll();
 		List<String> brandCategoryList = new ArrayList<String>();
-		for(BrandPojo pojo:pojos) {
-			brandCategoryList.add(pojo.getBrand()+"-"+pojo.getCategory());
+		for (BrandPojo pojo : pojos) {
+			brandCategoryList.add(pojo.getBrand() + "-" + pojo.getCategory());
 		}
 		return brandCategoryList;
 	}
 
-	
 }
-

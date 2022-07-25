@@ -2,6 +2,7 @@ package com.increff.pos.dto;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -42,6 +43,23 @@ public class ProductDtoTest extends AbstractUnitTest {
         //System.out.println(brandPojo.getBrandId());
         List<ProductData> productDataList = productDto.getUsingBrandCategory((brandPojo.getBrandId()));
         //System.out.println(productDataList.get(0).getBarcode());
+        assertEquals("bar123", productDataList.get(0).getBarcode());
+        assertEquals("munch", productDataList.get(0).getproductName());
+        assertEquals(10.50, productDataList.get(0).getMrp(), 0.01);
+    }
+    
+    @Test
+    public void testAddAll() throws Exception{
+    	BrandForm brandForm = TestDataUtil.getBrandFormDto("nestLE", "DairY");
+        List<BrandForm> forms = new ArrayList<BrandForm>();
+        forms.add(brandForm);
+        brandDto.addAll(forms);
+        BrandPojo brandPojo = brandService.getCheck("nestle", "dairy");
+        ProductForm productForm = TestDataUtil.getProductFormDto(brandPojo.getBrandId(), "bar123", "munch", 10.50);
+        List<ProductForm> productForms = new ArrayList<ProductForm>();
+        productForms.add(productForm);
+        productDto.addAll(productForms);
+        List<ProductData> productDataList = productDto.getAll();
         assertEquals("bar123", productDataList.get(0).getBarcode());
         assertEquals("munch", productDataList.get(0).getproductName());
         assertEquals(10.50, productDataList.get(0).getMrp(), 0.01);
