@@ -189,7 +189,6 @@ function fileValidation() {
 
 var fileData = [];
 var errorData = [];
-var processCount = 0;
 
 function processData() {
 	$('#MyModal').on('hidden.bs.modal', function() {

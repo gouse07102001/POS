@@ -207,7 +207,7 @@ public class OrderDto {
         transformer.transform(domSource, streamResult);
     }
 
-    public void createInvoice(HttpServletResponse response, Integer id)
+    public void createInvoice(HttpServletResponse response, Integer orderId)
             throws Exception {
         try {
 
@@ -220,7 +220,7 @@ public class OrderDto {
             // Make sure the XSL transformation's result is piped through to FOP
             Result res = new SAXResult(fop.getDefaultHandler());
             // Setup input
-            Source src = new StreamSource(new File("./src/main/resources/com/increff/pos/invoice" + id + ".xml"));
+            Source src = new StreamSource(new File("./src/main/resources/com/increff/pos/invoice" + orderId + ".xml"));
 
             transformer.transform(src, res);
             response.setContentType("application/pdf");

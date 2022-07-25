@@ -49,85 +49,7 @@ function getSP(i) {
 
 
 
-/*
-function ordersFilter() {
-	$("#order-filter").on("keyup", function() {
-		var value = $(this).val();
-		$("#orders-table-body tr").filter(function() {
-			$(this).toggle($(this).text().indexOf(value) > -1)
-		});
-	});
-}
 
-function filterByDates() {
-	var url = getOrdersUrl();
-	$.ajax({
-		url : url,
-		type : 'GET',
-		success : function(data) {
-
-			displayFilteredOrdersList(data);
-		},
-		error : function(response) {
-			var reponseMessage = JSON.parse(response.responseText).message;
-			errorDisplay('danger', reponseMessage);
-		}
-	});
-}
-*/
-/*
-function displayFilteredOrdersList(data) {
-	var startDate = $('#inputStartDate').val();
-	if (startDate === "")
-		startDate = "";
-	else
-		startDate = startDate.substring(8, 10) + startDate.substring(4, 8)
-				+ startDate.substring(0, 4) + " 00:00";
-	var endDate = $('#inputEndDate').val();
-	if (endDate === "")
-		endDate = "";
-	else
-		endDate = endDate.substring(8, 10) + endDate.substring(4, 8)
-				+ endDate.substring(0, 4) + " 59:59";
-	var id = $('#order-filter').val();
-	var $tbody = $('#orders-table').find('tbody');
-	$tbody.empty();
-	var j=0;
-	for (var i = data.length - 1; i >= 0; i--) {
-		var e = order_data[i];
-		var buttonHtml = ' <a class="btn btn-success" href="/pos/api/order/invoice/'
-				+ e.orderId + '" target="_blank" id="invoice">Generate Invoice</a>&nbsp;'
-				+ '<a class="btn btn-success" href="/pos/ui/order/view/'
-                + e.orderId + '">View Order</a>';
-		// buttonHtml.href="@{/api/order/invoice}";
-		if ((compareDates(startDate, e.time) == -1 && compareDates(e.time,
-				endDate) == -1)
-				|| filterorder(e.orderId, id) === -1) {
-
-			var row = '<tr>'
-			        + '<td>' + (Number(j++)+1) + '</td>'
-					+ '<td>' + e.orderId   + '</td>'
-					+ '<td>' + e.time + '</td>'
-					+ '<td>' + (Math.round(e.sellingPrice * 100) / 100).toFixed(2) + '</td>'
-					+ '<td>' + buttonHtml + '</td>' 
-					+ '</tr>';
-			$tbody.append(row);
-		}
-	}
-}
-
-function compareDates(a, b) {
-	if (a === "" || b === "")
-		return 0;
-	var ans = a < b ? -1 : (a > b ? 1 : 0);
-	return ans;
-}
-function filterorder(a, b) {
-	if (b === "" || b === undefined || Number(a) === Number(b))
-		return -1;
-	else
-		return 1;
-}*/
 
 // INITIALIZATION CODE
 function init() {
@@ -161,19 +83,6 @@ function errorDisplay(template, message){
 
 	}
 
-	/*function just(){
-        var date = new Date().toISOString().substring(0, 10),
-                field = document.querySelector('#inputEndDate');
-            field.value = date;
-
-            $("#inputEndDate").val(field.value);
-            var newDate = new Date(new Date().getTime() - (60*60*24*7*1000)).toISOString().substring(0, 10)
-
-            field = document.querySelector('#inputStartDate');
-                    field.value = newDate;
-            $("#inputStartDate").val(field.value);
-    }*/
-
 function highlight()
 {
 	document.getElementById("viewOrder-link").style.fontWeight = 900;
@@ -182,8 +91,6 @@ function highlight()
 $(document).ready(highlight);
 $(document).ready(init);
 $(document).ready(getOrdersList);
-//$(document).ready(ordersFilter);
-//$(document).ready(just);
 
 function displayOrdersList(tabledata) {
 	console.log(tabledata)
@@ -372,7 +279,6 @@ function displayOrderList(order_data) {
 }
 
 function getTime(){
-	//var id = window.location.href.split("/").reverse()[0];
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
 	var url = baseUrl + '/api/orderDetail/' + orderIdTemp;
 	$.ajax({

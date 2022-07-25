@@ -1,1 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?><InvoiceData><invoice><sno>1</sno><name>product</name><barcode>bar123</barcode><qty>5</qty><mrp>5.0</mrp><totalPrice>25.0</totalPrice></invoice><totalAmount>25.0</totalAmount><time>2022-07-22T13:59:34.551251400</time><ID>10</ID></InvoiceData>
+<?xml version="1.0" encoding="UTF-8"?><InvoiceData><invoice><sno>1</sno><name>carrot</name><qty>10</qty><mrp>10.0</mrp><totalPrice>100.0</totalPrice></invoice><totalAmount>100.0</totalAmount><time>2022-07-25T13:00:50</time><ID>10</ID></InvoiceData>

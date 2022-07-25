@@ -69,10 +69,10 @@ public class OrderController {
     }
 
     @ApiOperation(value = "Create Invoice")
-    @RequestMapping(path = "/api/order/invoice/{id}", method = RequestMethod.GET)
-    public void createInvoice(HttpServletResponse response, @PathVariable Integer id)
+    @RequestMapping(path = "/api/order/invoice/{orderId}", method = RequestMethod.GET)
+    public void createInvoice(HttpServletResponse response, @PathVariable Integer orderId)
             throws Exception {
-        dto.createInvoice(response, id);
+        dto.createInvoice(response, orderId);
     }
     
     @ApiOperation(value = "Adds a list of order details")

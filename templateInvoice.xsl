@@ -34,38 +34,42 @@
 					<fo:block font-size="10pt" space-after="10mm">
 						<fo:table table-layout="fixed" width="100%"
 							border-collapse="separate">
-							<fo:table-column column-width="2cm" />
+							<fo:table-column column-width="3cm" />
 							<fo:table-column column-width="5cm" />
 							<fo:table-column column-width="5cm" />
-							<fo:table-column column-width="3cm" />
-							<fo:table-column column-width="3cm" />
-							<fo:table-column column-width="3cm" />
+							<fo:table-column column-width="5cm" />
+							<fo:table-column column-width="5cm" />
 							<fo:table-header font-weight="bold">
 								<fo:table-cell border="1pt solid black"
-									xsl:use-attribute-sets="tableBorder">
+									xsl:use-attribute-sets="tableBorder" height="1cm">
+									<fo:block></fo:block>
 									<fo:block font-size="15pt" text-align="center"
-										font-weight="bold">S.NO.</fo:block>
+										font-weight="bold" space-before="2.2mm">S.NO.</fo:block>
 								</fo:table-cell>
 								<fo:table-cell border="1pt solid black"
 									xsl:use-attribute-sets="tableBorder">
+									<fo:block></fo:block>
 									<fo:block font-size="15pt" text-align="center"
-										font-weight="bold">ProductName</fo:block>
+										font-weight="bold" space-before="2.2mm">Product Name</fo:block>
 								</fo:table-cell>
 
 								<fo:table-cell border="1pt solid black"
 									xsl:use-attribute-sets="tableBorder">
+									<fo:block></fo:block>
 									<fo:block font-size="15pt" text-align="center"
-										font-weight="bold">Quantity</fo:block>
+										font-weight="bold" space-before="2.2mm">Quantity</fo:block>
 								</fo:table-cell>
 								<fo:table-cell border="1pt solid black"
 									xsl:use-attribute-sets="tableBorder">
+									<fo:block></fo:block>
 									<fo:block font-size="15pt" text-align="center"
-										font-weight="bold">SellingPrice</fo:block>
+										font-weight="bold" space-before="2.2mm">Selling Price</fo:block>
 								</fo:table-cell>
 								<fo:table-cell border="1pt solid black"
 									xsl:use-attribute-sets="tableBorder">
+									<fo:block></fo:block>
 									<fo:block font-size="15pt" text-align="center"
-										font-weight="bold">Total Price</fo:block>
+										font-weight="bold" space-before="2.2mm">Amount</fo:block>
 								</fo:table-cell>
 							</fo:table-header>
 							<fo:table-body>
@@ -73,12 +77,12 @@
 							</fo:table-body>
 						</fo:table>
 					</fo:block>
-					
+
 					<fo:block font-size="15pt" font-family="Helvetica"
 						text-align="left" color="black" font-weight="bold"
 						space-after="10mm">
-						
-						Total:
+
+						Total Price: Rs.
 						<xsl:value-of select="totalAmount" />
 					</fo:block>
 				</fo:flow>
@@ -88,14 +92,16 @@
 	<xsl:template match="invoice">
 		<fo:table-row>
 			<fo:table-cell border="1pt solid black"
-				xsl:use-attribute-sets="tableBorder">
-				<fo:block text-align="right" font-size="15pt">
+				xsl:use-attribute-sets="tableBorder" height="1cm">
+				<fo:block></fo:block>
+				<fo:block text-align="center" font-size="15pt" space-before="2.2mm">
 					<xsl:value-of select="sno" />
 				</fo:block>
 			</fo:table-cell>
 			<fo:table-cell border="1pt solid black"
 				xsl:use-attribute-sets="tableBorder">
-				<fo:block text-align="left" font-size="15pt">
+				<fo:block></fo:block>
+				<fo:block text-align="center" font-size="15pt" space-before="2.2mm">
 					<xsl:value-of select="name" />
 				</fo:block>
 			</fo:table-cell>
@@ -103,19 +109,22 @@
 
 			<fo:table-cell border="1pt solid black"
 				xsl:use-attribute-sets="tableBorder">
-				<fo:block text-align="right" font-size="15pt">
+				<fo:block></fo:block>
+				<fo:block text-align="center" font-size="15pt" space-before="2.2mm">
 					<xsl:value-of select="qty" />
 				</fo:block>
 			</fo:table-cell>
 			<fo:table-cell border="1pt solid black"
 				xsl:use-attribute-sets="tableBorder">
-				<fo:block text-align="right" font-size="15pt">
+				<fo:block></fo:block>
+				<fo:block text-align="center" font-size="15pt" space-before="2.2mm">
 					<xsl:value-of select="mrp" />
 				</fo:block>
 			</fo:table-cell>
 			<fo:table-cell border="1pt solid black"
 				xsl:use-attribute-sets="tableBorder">
-				<fo:block text-align="right" font-size="15pt">
+				<fo:block></fo:block>
+				<fo:block text-align="center" font-size="15pt"  space-before="2.2mm">
 					<xsl:value-of select="totalPrice" />
 				</fo:block>
 			</fo:table-cell>
