@@ -29,16 +29,16 @@ public class InventoryDto {
 		// TODO Auto-generated method stub
 		ProductPojo p = productService.getBarcodeById(form.getProductId());
 		if (Objects.isNull(p)) {
-			throw new ApiException("Product Does not Found");
+			throw new ApiException("Product does not found");
 		}
 		String barcode = p.getBarcode();
 		InventoryPojo i = convert(form);
 		i.setBarcode(barcode);
 
 		if (form.getQuantity() < 0)
-			throw new ApiException("Quantity should be Positive");
+			throw new ApiException("Quantity should be positive");
 		if (form.getQuantity() == 0)
-			throw new ApiException("Quantity should not be Zero");
+			throw new ApiException("Quantity should not be zero");
 		service.add(i);
 	}
 
@@ -49,16 +49,16 @@ public class InventoryDto {
 		for (InventoryForm iter : form) {
 			ProductPojo p = productService.getUsingBarcode(iter.getBarcode());
 			if (Objects.isNull(p)) {
-				throw new ApiException("Barcode Does not Found/" + index);
+				throw new ApiException("Barcode does not found/" + index);
 			}
 			String barcode = iter.getBarcode();
 			InventoryPojo i = convert(iter);
 			i.setBarcode(barcode);
 			i.setProductId(p.getProductId());
 			if (iter.getQuantity() < 0)
-				throw new ApiException("Quantity should be Positive/" + index);
+				throw new ApiException("Quantity should be positive/" + index);
 			if (iter.getQuantity() == 0)
-				throw new ApiException("Quantity should not be Zero/" + index);
+				throw new ApiException("Quantity should not be zero/" + index);
 			pojo.add(i);
 			index += 1;
 		}
@@ -96,14 +96,14 @@ public class InventoryDto {
 	public Integer getIdByBarcode(String barcode) throws Exception {
 		InventoryPojo i = service.getIdByBarcode(barcode);
 		if (i == null)
-			throw new ApiException("Product Doesnot Exist");
+			throw new ApiException("Product doesn't exist");
 		return i.getInventoryId();
 	}
 
 	public InventoryPojo getByBarcode(String barcode) throws Exception {
 		InventoryPojo i = service.getIdByBarcode(barcode);
 		if (i == null)
-			throw new ApiException("Product Doesnot Exist");
+			throw new ApiException("Product doesn't exist");
 		return i;
 	}
 
@@ -132,13 +132,13 @@ public class InventoryDto {
 	private String isNotValidQuantity(Integer quantity) {
 		// TODO Auto-generated method stub
 		if (quantity == null) {
-			return "Quantity can't be Empty";
+			return "Quantity can't be empty";
 		}
 		if (quantity == 0) {
 			return "Quantity can't be Zero";
 		}
 		if (quantity < 0) {
-			return "Quantity can't be Negative";
+			return "Quantity can't be negative";
 		}
 		return null;
 	}
@@ -146,7 +146,7 @@ public class InventoryDto {
 	public Integer getIdByBarcodeForSearch(String barcode) throws Exception {
 		InventoryPojo i = service.getIdByBarcode(barcode);
 		if (i == null)
-			throw new ApiException("Barcode Does not Exist");
+			throw new ApiException("Barcode does not exist");
 		return i.getInventoryId();
 	}
 	

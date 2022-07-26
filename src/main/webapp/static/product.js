@@ -350,6 +350,7 @@ function init() {
 	$('#process-data').click(processData);
 	$('#download-errors').click(downloadErrors);
 	$('#search-by-barcode').click(searchByBarcode);
+	$('#productFile').click(resetUploadDialog);
 }
 
 
@@ -603,10 +604,10 @@ function displayProductList(tabledata) {
 			var buttonHtml = ' <button class="btn btn-outline-primary btn-sm" onclick="displayEditProduct(' + p.productId + ')">Edit</button>'
 			//console.log("get method is successfull")
 			var row = '<tr>'
-				+ '<td>' + p.barcode + '</td>'
-				+ '<td>' + p.productName + '</td>'
-				+ '<td>' + p.brand + '</td>'
-				+ '<td>' + p.category + '</td>'
+				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+p.barcode+'>' + p.barcode + '</div></td>'
+				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+p.productName+'>' + p.productName + '</div></td>'
+				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+p.brand+'>' + p.brand + '</div></td>'
+				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+p.category+'>' + p.category + '</div></td>'
 				+ '<td>' + (Math.round(p.mrp * 100) / 100).toFixed(2) + '</td>'
 				+ '<td>' + buttonHtml + '</td>'
 				+ '</tr>';
@@ -616,6 +617,11 @@ function displayProductList(tabledata) {
 		pageButtons(data.pages)
 	}
 }
+
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 
 
 

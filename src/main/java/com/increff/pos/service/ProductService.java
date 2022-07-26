@@ -106,6 +106,7 @@ public class ProductService {
 
 	protected static void normalize(ProductPojo p) {
 		p.setProductName(p.getProductName().toLowerCase().trim());
+		p.setBarcode(p.getBarcode().toLowerCase().trim());
 	}
 
 	public List<String> getAllBarcodes() {

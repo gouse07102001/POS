@@ -167,6 +167,7 @@ function init() {
 	$('#upload-data').click(displayUploadData);
 	$('#process-data').click(processData);
 	$('#download-errors').click(downloadErrors);
+	$('#brandFile').click(resetUploadDialog);
 
 }
 
@@ -196,8 +197,9 @@ function processData() {
 	})
 	var file = $('#brandFile')[0].files[0];
 
-	if (fileValidation())
+	if (fileValidation()){
 		readFileData(file, readFileDataCallback);
+		}
 	else {
 		$('#MyModal').on('hidden.bs.modal', function() {
 			$(this).find('upload-brand-modal').trigger('reset');
@@ -422,8 +424,8 @@ function displayBrandList(tabledata) {
 			var buttonHtml = '<button class="btn btn-outline-primary btn-sm" onclick= "displayEditBrand(' + p.brandId
 				+ ')" >Edit</button>'
 			var row = '<tr>'
-				+ '<td>' + p.brand + '</td>'
-				+ '<td>' + p.category + '</td>'
+				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+p.brand+'>' + p.brand + '</div></td>'
+				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+p.category+'>' + p.category + '</div></td>'
 				+ '<td>' + buttonHtml + '</td>'
 				+ '</tr>';
 			$tbody.append(row);
@@ -433,4 +435,8 @@ function displayBrandList(tabledata) {
 		pageButtons(data.pages)
 	}
 }
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 

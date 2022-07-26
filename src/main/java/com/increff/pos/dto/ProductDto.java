@@ -32,7 +32,7 @@ public class ProductDto {
 			throw new ApiException(error);
 		}
 		else if(!isBarcodeUnique(form.getBarcode())) {
-			throw new ApiException("Barcode must be Unique");
+			throw new ApiException("Barcode must be unique");
 		}
 		else {	
 			service.add(convert(form));
@@ -48,7 +48,7 @@ public class ProductDto {
 				throw new ApiException(error +"/"+index);
 			}
 			else if(!isBarcodeUnique(iter.getBarcode())) {
-				throw new ApiException("Barcode must be Unique/"+index);
+				throw new ApiException("Barcode must be unique/"+index);
 			}
 			else {	
 				pojo.add(convert(iter));
@@ -65,7 +65,7 @@ public class ProductDto {
 		// TODO Auto-generated method stub
 		ProductPojo d = service.get(id);
 		if(d==null) {
-			throw new ApiException("Barcode Does not exist");
+			throw new ApiException("Barcode does not exist");
 		}
 		return convert(d);
 	}
@@ -83,7 +83,7 @@ public class ProductDto {
 	public ProductData getCheck(String barcode) throws Exception {
 		ProductPojo p = service.getCheckBarcode(barcode);
 		if(p==null) {
-			throw new ApiException("Barcode Does not exist");
+			throw new ApiException("Barcode does not exist");
 		}
 		return convert(p);
 	}
@@ -166,7 +166,7 @@ public class ProductDto {
         }
 
         if (form.getBrandCategory()==null) {
-        	return("Brand-Category did not selected");
+        	return("Brand Category did not selected");
         }
         if (form.getproductName()==null || form.getproductName().isEmpty()) {
         	return("Product Name cannot be empty");

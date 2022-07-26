@@ -26,7 +26,7 @@ public class BrandDto {
 		if(s != null) {
 			throw new ApiException(s);
 		}
-		if(!isValid(form)) {
+		if(!isValid(form,-1)) {
 			BrandPojo d = convert(form);
 			service.add(d);
 		}
@@ -44,8 +44,8 @@ public class BrandDto {
 			if(s != null) {
 				throw new ApiException(s +"/"+index);
 			}
-			if(isValid(iter)) {
-				throw new ApiException("Brand Category pair already exist/"+index);	
+			if(isValid(iter,-1)) {
+				throw new ApiException("Brand Category pair already exist /"+index);	
 			}
 			index += 1;
 		}
@@ -86,7 +86,7 @@ public class BrandDto {
 		if(s != null) {
 			throw new ApiException(s);
 		}
-		else if(!isValid(form)) {
+		else if(!isValid(form,brandId)) {
 			BrandPojo d = convert(form);
 			service.update(brandId, d);
 		}
@@ -112,11 +112,12 @@ public class BrandDto {
 	}
 	
 	
-	private boolean isValid(BrandForm d) {
+	private boolean isValid(BrandForm d,Integer brandId) {
 		List<BrandPojo> p = service.getAll();
+		
 		for(BrandPojo i:p)
 		{
-			if((i.getBrand().equalsIgnoreCase(d.getBrand())) && (i.getCategory().equalsIgnoreCase(d.getCategory())))
+			if((i.getBrand().equalsIgnoreCase(d.getBrand())) && (i.getCategory().equalsIgnoreCase(d.getCategory())) && (brandId != i.getBrandId()))
 				return true;
 		}
 		return false;

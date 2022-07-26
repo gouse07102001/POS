@@ -266,7 +266,7 @@ function displayOrderList(order_data) {
 		var e = order_data[i];
 		total += Number(e.quantity*e.sellingPrice);
 		var row = '<tr>'
-				+ '<td>' + e.barcode + '</td>'
+				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+e.barcode+'>' + e.barcode + '</div></td>'
 				+ '<td>' + e.quantity + '</td>' 
 				+ '<td>' + (Math.round(e.sellingPrice * 100) / 100).toFixed(2) + '</td>'
 				+ '<td>' + (Math.round(Number(e.quantity*e.sellingPrice) * 100) /100).toFixed(2) + '</td>'
@@ -293,5 +293,11 @@ function getTime(){
 		}
 	});
 }
+
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
 
 

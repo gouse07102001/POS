@@ -419,6 +419,7 @@ function init() {
 	$('#process-data-inventory').click(processDataInventory);
 	$('#divert-update').click(updateInventory);
 	$('#download-errors-inventory').click(downloadErrors);
+	$('#inventoryFile').click(resetUploadDialogInventory);
 }
 
 function errorDisplay(template, message) {
@@ -544,8 +545,8 @@ function displayInventoryList(tabledata) {
 			var buttonHtml = ' <button class="btn btn-outline-primary btn-sm" onclick="displayEditInventory(' + p.inventoryId
 				+ ')">Edit</button>';
 			var row = '<tr>'
-				+ '<td>' + p.name + '</td>'
-				+ '<td>' + p.barcode + '</td>'
+				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+p.name+'>' + p.name + '</div></td>'
+				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+p.barcode+'>' + p.barcode + '</div></td>'
 				+ '<td>' + p.quantity + '</td>'
 				+ '<td>' + buttonHtml + '</td>'
 				+ '</tr>';
@@ -561,3 +562,9 @@ function displayInventoryList(tabledata) {
 	}
 
 }
+
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+

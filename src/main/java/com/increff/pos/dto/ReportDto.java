@@ -88,8 +88,6 @@ public class ReportDto {
         for (InventoryPojo p : pojolist) {
             InventoryReportData data = new InventoryReportData();
             ProductPojo propojo = productservice.get(p.getProductId());
-           // Integer brand_id = findId(propojo);
-            //BrandPojo pojo = brandservice.get(brand_id);
             BrandPojo pojo = brandservice.get(propojo.getBrandCategory());
             data.setProductName(propojo.getProductName());
             data.setBarcode(propojo.getBarcode());
