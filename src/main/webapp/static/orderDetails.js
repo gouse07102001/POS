@@ -151,11 +151,11 @@ function displayOrdersList(tabledata) {
 		}
 
 		if (state.page != 1) {
-			wrapper.innerHTML = `<button value=${1} class="page btn btn-md btn-primary" style="margin: 0 2px;">&#171; First</button>` + wrapper.innerHTML
+			wrapper.innerHTML = `<button value=${1} class="page btn btn-md btn-secondary" style="margin: 0 2px;">&#171; First</button>` + wrapper.innerHTML
 		}
 
 		if (state.page != pages) {
-			wrapper.innerHTML += `<button value=${pages} class="page btn btn-md btn-primary" style="margin: 0 2px;">Last &#187;</button>`
+			wrapper.innerHTML += `<button value=${pages} class="page btn btn-md btn-secondary" style="margin: 0 2px;">Last &#187;</button>`
 		}
 
 		$('.page').on('click', function() {
@@ -178,9 +178,9 @@ function buildTable(data){
 	$tbody.empty();
 	for(var i in myList){
 		var e = myList[i];
-		var buttonHtml = ' <a class="btn btn-success" href="/pos/api/order/invoice/'
+		var buttonHtml = ' <a class="btn btn-primary" href="/pos/api/order/invoice/'
 				+ e.orderId + '" target="_blank" id="invoice">Download Invoice</a>&nbsp;'
-				+ '<a class="btn btn-success" style="color:white" onclick= "displayViewOrder(' + e.orderId
+				+ '<a class="btn btn-primary" style="color:white" onclick= "displayViewOrder(' + e.orderId
 				+ ')"">View Order</a>';
 		var row = '<tr>'
 					+ '<td>' + e.orderId   + '</td>'
@@ -266,7 +266,7 @@ function displayOrderList(order_data) {
 		var e = order_data[i];
 		total += Number(e.quantity*e.sellingPrice);
 		var row = '<tr>'
-				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+e.barcode+'>' + e.barcode + '</div></td>'
+				+ '<td><div style="width:70px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+e.barcode+'>' + e.barcode + '</div></td>'
 				+ '<td>' + e.quantity + '</td>' 
 				+ '<td>' + (Math.round(e.sellingPrice * 100) / 100).toFixed(2) + '</td>'
 				+ '<td>' + (Math.round(Number(e.quantity*e.sellingPrice) * 100) /100).toFixed(2) + '</td>'

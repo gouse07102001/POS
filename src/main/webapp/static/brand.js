@@ -392,11 +392,11 @@ function displayBrandList(tabledata) {
 		}
 
 		if (state.page != 1) {
-			wrapper.innerHTML = `<button value=${1} class="page btn btn-md btn-primary" style="margin: 0 2px;">&#171; First</button>` + wrapper.innerHTML
+			wrapper.innerHTML = `<button value=${1} class="page btn btn-md btn-secondary" style="margin: 0 2px;">&#171; First</button>` + wrapper.innerHTML
 		}
 
 		if (state.page != pages) {
-			wrapper.innerHTML += `<button value=${pages} class="page btn btn-md btn-primary" style="margin: 0 2px;">Last &#187;</button>`
+			wrapper.innerHTML += `<button value=${pages} class="page btn btn-md btn-secondary" style="margin: 0 2px;">Last &#187;</button>`
 		}
 
 		$('.page').on('click', function() {

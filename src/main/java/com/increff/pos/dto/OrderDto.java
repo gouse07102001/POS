@@ -173,6 +173,9 @@ public class OrderDto {
             count.appendChild(document.createTextNode(Integer.toString(sno)));
             product.appendChild(count);
             Element product_name = document.createElement("name");
+            if(p.getProductName().length() > 15) {
+            	p.setProductName(p.getProductName().substring(0, 12) + "...");
+            }
             product_name.appendChild(document.createTextNode(p.getProductName()));
             product.appendChild(product_name);
             Element qty = document.createElement("qty");
