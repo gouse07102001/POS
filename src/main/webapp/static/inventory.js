@@ -19,6 +19,10 @@ function updateInventory(event) {
 		errorDisplay('danger', "Invalid Inventory");
 		return false;
 	}
+	if (($("#inputInventory").val() > 9007199254740990)) {
+		errorDisplay('danger', "Maximum limit exceeded for Quantity");
+		return false;
+	}
 	var product = $("#editProduct option:selected").text();
 	var json = toJson($form);
 	document.getElementById("edit-inventory-modal").reset();
@@ -46,7 +50,7 @@ function updateInventory(event) {
 	return false;
 }
 
-function addInventory(){
+function addInventory() {
 	var $form = $('#add-inventory-form');
 	if ($("#inputProduct option:selected").val() === "none") {
 		errorDisplay('danger', "Product Did not selected");
@@ -54,6 +58,11 @@ function addInventory(){
 	}
 	if (($("#inputInventory").val() <= 0)) {
 		errorDisplay('danger', "Invalid Inventory");
+		return false;
+	}
+
+	if (($("#inputInventory").val() > 9007199254740990)) {
+		errorDisplay('danger', "Maximum limit exceeded for Quantity");
 		return false;
 	}
 
@@ -85,7 +94,7 @@ function addInventory(){
 }
 
 function addProduct() {
-	var url = getProductUrl()+"s";
+	var url = getProductUrl() + "s";
 	$.ajax({
 		url: url,
 		type: 'GET',
@@ -123,7 +132,7 @@ function changeInventory(data) {
 }
 
 function updateInventory1() {
-	
+
 	// Get the ID
 	var id = document.getElementById("editProduct").value
 	var url = getInventoryUrl() + "/" + id;
@@ -143,7 +152,7 @@ function updateInventory1() {
 			$('#edit-inventory-modal').modal('toggle');
 			errorDisplay('success', "Inventory Edited successfully");
 			return true
-			
+
 		},
 		error: function(response) {
 			var reponseMessage = JSON.parse(response.responseText).message;
@@ -237,7 +246,7 @@ function updateUploadDialogInventory() {
 
 function processDataInventory() {
 	var file = $('#inventoryFile')[0].files[0];
-	
+
 	if (fileValidation())
 		readFileDataInventory(file, readFileDataCallbackInventory);
 	else {
@@ -249,6 +258,14 @@ function processDataInventory() {
 
 function readFileDataCallbackInventory(results) {
 	fileDataInventory = results.data;
+	if (fileDataInventory.length > 5000) {
+		errorDisplay("danger", "Files Size should be less than 5000");
+		return false;
+	}
+	if(fileDataInventory.length==0){
+		errorDisplay('danger','Empty file')
+		return false
+	}
 	uploadRowsInventory();
 }
 
@@ -310,7 +327,29 @@ function uploadRowsInventory() {
 	// Process next row
 	var json = JSON.stringify(fileDataInventory);
 	console.log(fileDataInventory)
-	var url = getInventoryUrl()+"/list";
+	var url = getInventoryUrl() + "/list";
+	var index=0
+	for (obj in json) {
+		if ((obj.quantity <= 0)) {
+			var row = fileDataInventory[index];
+			row.error ="Quantity must be greater than zero in Line number " + index+1;
+			errorDataInventory.push(row);
+			updateUploadDialogInventory()
+			errorDisplay('danger', row.error)
+			getInventory();
+			return false;
+		}
+		if (obj.quantity > 9007199254740990) {
+			var row = fileDataInventory[index];
+			row.error ="Maximum limit exceeded for Quantity in Line number " + index+1;
+			errorDataInventory.push(row);
+			updateUploadDialogInventory()
+			errorDisplay('danger', row.error)
+			getInventory();
+			return false;
+		}
+		index++
+	}
 	// Make ajax call
 	$.ajax({
 		url: url,
@@ -321,23 +360,22 @@ function uploadRowsInventory() {
 		},
 		success: function() {
 			updateUploadDialogInventory()
-			errorDisplay('success',"Data Uploaded Successfully")
+			errorDisplay('success', "Data Uploaded Successfully")
 			$('#upload-inventory-modal').modal('toggle');
 			getInventory();
 		},
 		error: function(response) {
 			var exception = JSON.parse(response.responseText).message
 			var index = exception.indexOf('/')
-			var string = exception.substring(index+1,exception.length)
-			var value = parseInt(string,10)
-			let str = exception.substring(0,index)
+			var string = exception.substring(index + 1, exception.length)
+			var value = parseInt(string, 10)
+			let str = exception.substring(0, index)
 			var row = fileDataInventory[value];
 			value++
 			row.error = str + " in Line number " + value;
-			console.log(row)
 			errorDataInventory.push(row);
 			updateUploadDialogInventory()
-			errorDisplay('danger',row.error)
+			errorDisplay('danger', row.error)
 			getInventory();
 		}
 	});
@@ -448,10 +486,9 @@ function errorDisplay(template, message) {
 	}
 
 }
-function highlight()
-{
+function highlight() {
 	document.getElementById("inventory-link").style.fontWeight = 900;
-	
+
 }
 $(document).ready(highlight);
 $(document).ready(init);
@@ -545,8 +582,8 @@ function displayInventoryList(tabledata) {
 			var buttonHtml = ' <button class="btn btn-outline-primary btn-sm" onclick="displayEditInventory(' + p.inventoryId
 				+ ')">Edit</button>';
 			var row = '<tr>'
-				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+p.name+'>' + p.name + '</div></td>'
-				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+p.barcode+'>' + p.barcode + '</div></td>'
+				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title=' + p.name + '>' + p.name + '</div></td>'
+				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title=' + p.barcode + '>' + p.barcode + '</div></td>'
 				+ '<td>' + p.quantity + '</td>'
 				+ '<td>' + buttonHtml + '</td>'
 				+ '</tr>';
@@ -564,7 +601,7 @@ function displayInventoryList(tabledata) {
 }
 
 
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
+$(function() {
+	$('[data-toggle="tooltip"]').tooltip()
 })
 

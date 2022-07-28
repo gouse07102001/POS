@@ -191,6 +191,10 @@ function readFileDataCallback(results) {
 		errorDisplay("danger", "Files Size should be less than 5000");
 		return false;
 	}
+	if(fileData.length==0){
+		errorDisplay('danger','Empty file')
+		return false
+	}
 	uploadRows();
 }
 

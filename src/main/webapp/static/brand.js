@@ -196,10 +196,9 @@ function processData() {
 		$(this).find('upload-brand-modal').trigger('reset');
 	})
 	var file = $('#brandFile')[0].files[0];
-
-	if (fileValidation()){
+	if (fileValidation()) {
 		readFileData(file, readFileDataCallback);
-		}
+	}
 	else {
 		$('#MyModal').on('hidden.bs.modal', function() {
 			$(this).find('upload-brand-modal').trigger('reset');
@@ -208,9 +207,23 @@ function processData() {
 
 }
 
+function headersValidation(){
+	if(fileData.length==0){
+		errorDisplay('danger','Empty file')
+		return false
+	}
+	return true
+}
+
 function readFileDataCallback(results) {
 	fileData = results.data;
-	uploadRows();
+	if (fileData.length > 5000) {
+		errorDisplay("danger", "Files Size should be less than 5000");
+		return false;
+	}
+	if(headersValidation()){
+		uploadRows();
+	}
 }
 
 function readFileData(file, callback) {
@@ -249,7 +262,7 @@ function uploadRows() {
 			var string = exception.substring(index + 1, exception.length)
 			var value = parseInt(string, 10)
 			let str = exception.substring(0, index)
-			processCount=value
+			processCount = value
 			var row = fileData[value];
 			value++
 			row.error = str + " in Line number " + value;
@@ -424,8 +437,8 @@ function displayBrandList(tabledata) {
 			var buttonHtml = '<button class="btn btn-outline-primary btn-sm" onclick= "displayEditBrand(' + p.brandId
 				+ ')" >Edit</button>'
 			var row = '<tr>'
-				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+p.brand+'>' + p.brand + '</div></td>'
-				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+p.category+'>' + p.category + '</div></td>'
+				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title=' + p.brand + '>' + p.brand + '</div></td>'
+				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title=' + p.category + '>' + p.category + '</div></td>'
 				+ '<td>' + buttonHtml + '</td>'
 				+ '</tr>';
 			$tbody.append(row);
@@ -436,7 +449,7 @@ function displayBrandList(tabledata) {
 	}
 }
 
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
+$(function() {
+	$('[data-toggle="tooltip"]').tooltip()
 })
 

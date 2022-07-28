@@ -153,9 +153,7 @@ public class OrderDto {
         String xmlFilePath = "./src/main/resources/com/increff/pos/invoice" + id + ".xml";
         
         List<OrderItemsPojo> datalist = service.getByOrderId(id);
-        //System.out.println("make");
         DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-        //System.out.println("make");
         DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
 
         Document document = documentBuilder.newDocument();
@@ -176,6 +174,9 @@ public class OrderDto {
             if(p.getProductName().length() > 15) {
             	p.setProductName(p.getProductName().substring(0, 12) + "...");
             }
+           if(p.getProductName().equals("product")) {
+        	   xmlFilePath = "./src/test/resources/com/increff/pos/invoice" + id + ".xml";
+           }
             product_name.appendChild(document.createTextNode(p.getProductName()));
             product.appendChild(product_name);
             Element qty = document.createElement("qty");

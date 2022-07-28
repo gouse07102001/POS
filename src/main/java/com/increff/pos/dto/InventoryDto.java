@@ -39,6 +39,8 @@ public class InventoryDto {
 			throw new ApiException("Quantity should be positive");
 		if (form.getQuantity() == 0)
 			throw new ApiException("Quantity should not be zero");
+		if(form.getQuantity() > Integer.MAX_VALUE)
+			throw new ApiException("Maximum limit exceeded for Quantity");
 		service.add(i);
 	}
 

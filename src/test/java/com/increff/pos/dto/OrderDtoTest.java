@@ -48,6 +48,7 @@ public class OrderDtoTest extends AbstractUnitTest {
     //  Test for adding order
     @Test
     public void testAdd() throws Exception {
+    	// set env var
         OrderItemsForm o = getInventoryFormTest();
         List<OrderItemsForm> orders = new ArrayList<OrderItemsForm>();
         orders.add(o);
@@ -153,7 +154,6 @@ public class OrderDtoTest extends AbstractUnitTest {
         b.setBrand("nestle");
         b.setCategory("dairy");
         brandService.add(b);
-        //System.out.println("Invnetory Test getInvPojo rand" + b.getId());
         double mrp = 10.25;
         p.setBarcode(barcode);
         p.setBrandCategory(b.getBrandId());
@@ -169,6 +169,10 @@ public class OrderDtoTest extends AbstractUnitTest {
         o.setQuantity(5);
         o.setSellingPrice(5.00);
         return o;
+    }
+    
+    private void setup() {
+    	
     }
     
     

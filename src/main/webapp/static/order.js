@@ -454,8 +454,8 @@ function displayOrderItemList(flag = 0) {
 		var buttonHtml = ' <button class="btn btn-outline-primary btn-sm"  onclick="displayOrderItem(\'' + i + '\')">Edit</button>';
 		buttonHtml += ' <button class="btn btn-outline-danger btn-sm"  onclick="deleteOrderItem(\'' + i + '\')">Delete</button>';
 		var row = '<tr>'
-			+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+orderItemsData[i].productName+'>' + orderItemsData[i].productName + '</div></td>'
-			+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+orderItemsData[i].barcode+'>' + orderItemsData[i].barcode + '</div></td>'
+			+ '<td><div style="width:140px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+orderItemsData[i].productName+'>' + orderItemsData[i].productName + '</div></td>'
+			+ '<td><div style="width:130px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+orderItemsData[i].barcode+'>' + orderItemsData[i].barcode + '</div></td>'
 			+ '<td>' + orderItemsData[i].quantity + '</td>'
 			+ '<td>' + (Math.round(orderItemsData[i].sellingPrice * 100) / 100).toFixed(2) + '</td>'
 			+ '<td>' + (Math.round((orderItemsData[i].amount) * 100) / 100).toFixed(2) + '</td>'
