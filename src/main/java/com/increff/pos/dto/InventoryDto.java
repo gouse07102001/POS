@@ -49,8 +49,8 @@ public class InventoryDto {
 		List<InventoryPojo> pojo = new ArrayList<InventoryPojo>();
 		Integer index = 0;
 		for (InventoryForm iter : form) {
-			ProductPojo p = productService.getUsingBarcode(iter.getBarcode());
-			if (Objects.isNull(p)) {
+			ProductPojo p = productService.getByBarcode(iter.getBarcode());
+			if (p==null ||Objects.isNull(p)) {
 				throw new ApiException("Barcode does not found/" + index);
 			}
 			String barcode = iter.getBarcode();

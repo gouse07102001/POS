@@ -133,8 +133,14 @@ public class ProductService {
     public ProductPojo getUsingBarcode(String barcode) throws Exception {
         ProductPojo p = dao.selectByBarcode(barcode);
         if (p == null) {
-            throw new ApiException("Inventory with this Barcode does not exist");
+            throw new ApiException("Barcode does not exist");
         }
+        return p;
+    }
+    
+    @Transactional(rollbackOn = ApiException.class)
+    public ProductPojo getByBarcode(String barcode) throws Exception {
+        ProductPojo p = dao.selectByBarcode(barcode);
         return p;
     }
 

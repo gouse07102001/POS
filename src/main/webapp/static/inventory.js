@@ -372,6 +372,7 @@ function uploadRowsInventory() {
 			let str = exception.substring(0, index)
 			var row = fileDataInventory[value];
 			value++
+			console.log(exception)
 			row.error = str + " in Line number " + value;
 			errorDataInventory.push(row);
 			updateUploadDialogInventory()

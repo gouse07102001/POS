@@ -18,7 +18,7 @@ public class InventoryService {
 
 	@Transactional
 	public void add(InventoryPojo p) throws Exception {
-		InventoryPojo invPojo = getInventoryPojo(p.getProductId());
+		InventoryPojo invPojo = getIdByBarcode(p.getBarcode());
 		if (invPojo == null) {
 			dao.insert(p);
 		}
