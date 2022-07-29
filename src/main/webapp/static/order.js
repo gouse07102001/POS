@@ -104,19 +104,22 @@ function getQuantity(barcode,productId,mrp){
 	return false;
 }
 
-function checkOrderItem(barcode, productId) {
+function checkOrderItem(barcode, productId,inventory) {
 	var quantity = $("#order-form input[name=quantity]").val();
 	quantity = Number(quantity);
 	var sellingPrice = $("#order-form input[name=sellingPrice]").val();
 	var idx = orderItemsData.findIndex(o => o.barcode === barcode);
-	if (idx !== -1){
-		errorDisplay('danger', "Product with given barcode already exist in cart please edit to modify the order item");
+	if ((idx != -1) && (orderItemsData[idx].sellingPrice != sellingPrice)){
+		errorDisplay('danger', "Product with given barcode already exist in cart with a different selling price");
 		}
 	else {
 		if (idx === -1)
 			orderItemsData.push({ barcode, productId, quantity, sellingPrice});
-		else {
-			orderItemsData[idx].quantity = quantity;
+		else if(inventory >= (orderItemsData[idx].quantity + quantity)) {
+			orderItemsData[idx].quantity += quantity;
+		}
+		else{
+			errorDisplay('danger', 'Inventory shortage!! Available inventory is '+inventory);
 		}
 		document.getElementById("order-form").reset();
 		$('#submit').prop('disabled', false);
@@ -166,7 +169,7 @@ function validate(barcode,productId,mrp,inventory) {
 		url: url,
 		type: 'GET',
 		success: function(data) {
-			checkOrderItem(data.barcode, productId);
+			checkOrderItem(data.barcode, productId,inventory);
 			return true;
 		},
 		error: function(response) {
@@ -494,7 +497,7 @@ function displayOrderItem(i) {
 
 function errorDisplay(template, message) {
 	var $errorbar = $('#status-bar');
-	var text = 'Success! ';
+	var text = '	Success    ';
 	if (template === 'danger') {
 		text = 'Failed! ';
 		Toastify({
@@ -508,7 +511,7 @@ function errorDisplay(template, message) {
 	}
 	else {
 		Toastify({
-			text: text + " " + message,
+			text: text,
 			close: false,
 			style: {
 				background: "linear-gradient(to right, #00ff11, #60e069)",

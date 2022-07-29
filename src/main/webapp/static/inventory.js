@@ -9,17 +9,16 @@ function getProductUrl() {
 }
 
 function updateInventory(event) {
-	$('#edit-inventory-modal').modal('toggle');
 	var $form = $('#edit-inventory-form');
 	if ($("#editProduct option:selected").val() === "none") {
 		errorDisplay('danger', "Product Did not selected");
 		return false;
 	}
-	if (($("#inputInventory").val() <= 0)) {
+	if (($("#inputInventory1").val() <= 0)) {
 		errorDisplay('danger', "Invalid Inventory");
 		return false;
 	}
-	if (($("#inputInventory").val() > 9007199254740990)) {
+	if (($("#inputInventory1").val() > 9007199254740990)) {
 		errorDisplay('danger', "Maximum limit exceeded for Quantity");
 		return false;
 	}
@@ -35,6 +34,7 @@ function updateInventory(event) {
 			'Content-Type': 'application/json'
 		},
 		success: function(response) {
+			$('#edit-inventory-modal').modal('toggle');
 			errorDisplay('success', "Inventory Added Successfully");
 			getInventory();
 			return true;
@@ -394,6 +394,10 @@ function toJson($form) {
 }
 
 function downloadErrors() {
+	if(errorDataInventory.length == 0){
+		errorDisplay('message','No errors occurred')
+		return false
+	}
 	writeFileData(errorDataInventory);
 }
 function writeFileData(arr) {
@@ -450,7 +454,7 @@ function displayInventory(data, id) {
 
 
 function init() {
-	$('#update-inventory').click(updateInventory);
+	$('#update-inventory').click(updateInventory1);
 	$('#upload-inventory').click(uploadInventory);
 	$('#add-inventory-form').on('submit', e => e.preventDefault())
 	$('#refresh-data').click(getInventory);
@@ -462,7 +466,7 @@ function init() {
 
 function errorDisplay(template, message) {
 	var $errorbar = $('#status-bar');
-	var text = 'Success! ';
+	var text = '	Success    ';
 	if (template === 'danger') {
 		text = 'Failed! ';
 		Toastify({
@@ -474,9 +478,19 @@ function errorDisplay(template, message) {
 			duration: -1
 		}).showToast();
 	}
+	else if (template === "message") {
+		Toastify({
+			text: message,
+			close: false,
+			style: {
+				background: "linear-gradient(to right, #FFE933, #FFE933)",
+			},
+			duration: 3000
+		}).showToast();
+	}
 	else {
 		Toastify({
-			text: text + " " + message,
+			text: text,
 			close: false,
 			style: {
 				background: "linear-gradient(to right, #00ff11, #60e069)",
@@ -504,7 +518,7 @@ function displayInventoryList(tabledata) {
 		'querySet': tabledata,
 		'page': 1,
 		'rows': 5,
-		'window': 5,
+		'window': 3,
 	}
 
 	buildTable()

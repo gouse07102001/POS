@@ -188,7 +188,7 @@ function init() {
 
 function errorDisplay(template, message) {
 	var $errorbar = $('#status-bar');
-	var text = 'Success! ';
+	var text = '	Success    ';
 	if (template === 'danger') {
 		text = 'Failed! ';
 		Toastify({
@@ -212,7 +212,7 @@ function errorDisplay(template, message) {
 	}
 	else {
 		Toastify({
-			text: text + " " + message,
+			text: text,
 			close: false,
 			style: {
 				background: "linear-gradient(to right, #00ff11, #60e069)",

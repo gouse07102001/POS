@@ -57,13 +57,13 @@ public class OrderController {
     }
 
     @ApiOperation(value = "Gets an Order's Date and Time")
-    @RequestMapping(path = "/api/orderDetail/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/api/order-details/{id}", method = RequestMethod.GET)
     public OrderData getOrder(@PathVariable Integer id) throws Exception {
         return dto.getOrder(id);
     }
 
     @ApiOperation(value = "Gets every order's Date and Time")
-    @RequestMapping(path = "/api/orderDetail", method = RequestMethod.GET)
+    @RequestMapping(path = "/api/order-details", method = RequestMethod.GET)
     public List<OrderData> getAllOrders() {
         return dto.getAllOrders();
     }

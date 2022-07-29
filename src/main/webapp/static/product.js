@@ -88,6 +88,7 @@ function updateProduct(event) {
 	//Set the values to update
 	var $form = $("#product-edit-form");
 	var json = toJson($form);
+	console.log(json)
 	$.ajax({
 		url: url,
 		type: 'PUT',
@@ -248,6 +249,10 @@ function uploadRows() {
 }
 
 function downloadErrors() {
+	if(errorData.length == 0){
+		errorDisplay('message','No errors occurred')
+		return false
+	}
 	writeFileData(errorData);
 }
 
@@ -457,7 +462,7 @@ $(document).ready(function() {
 
 function errorDisplay(template, message) {
 	var $errorbar = $('#status-bar');
-	var text = 'Success! ';
+	var text = '	Success    ';
 	if (template === 'danger') {
 		text = 'Failed! ';
 		Toastify({
@@ -469,9 +474,19 @@ function errorDisplay(template, message) {
 			duration: -1
 		}).showToast();
 	}
+	else if (template === "message") {
+		Toastify({
+			text: message,
+			close: false,
+			style: {
+				background: "linear-gradient(to right, #FFE933, #FFE933)",
+			},
+			duration: 3000
+		}).showToast();
+	}
 	else {
 		Toastify({
-			text: text + " " + message,
+			text: text,
 			close: false,
 			style: {
 				background: "linear-gradient(to right, #00ff11, #60e069)",
@@ -526,7 +541,7 @@ function displayProductList(tabledata) {
 
 		'page': 1,
 		'rows': 5,
-		'window': 5,
+		'window': 3,
 	}
 
 	buildTable()

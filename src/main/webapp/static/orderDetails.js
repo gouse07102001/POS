@@ -1,7 +1,7 @@
 var order_data = []
 function getOrdersUrl() {
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
-	return baseUrl + "/api/orderDetail";
+	return baseUrl + "/api/order-details";
 }
 
 function getOrdersList() {
@@ -58,7 +58,7 @@ function init() {
 
 function errorDisplay(template, message){
 	var $errorbar = $('#status-bar');
-	var text = 'Success! ';
+	var text = '	Success    ';
 	if(template === 'danger') {
 		text = 'Failed! ';
 		Toastify({
@@ -72,7 +72,7 @@ function errorDisplay(template, message){
 	}
 	else{
         Toastify({
-            text: text + " " + message,
+            text: text,
             close: false,
             style: {
                 background: "linear-gradient(to right, #00ff11, #60e069)",
@@ -101,7 +101,7 @@ function displayOrdersList(tabledata) {
 
 		'page': 1,
 		'rows': 5,
-		'window': 5,
+		'window': 3,
 	}
 
 	buildTable()
@@ -280,7 +280,7 @@ function displayOrderList(order_data) {
 
 function getTime(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
-	var url = baseUrl + '/api/orderDetail/' + orderIdTemp;
+	var url = baseUrl + '/api/order-details/' + orderIdTemp;
 	$.ajax({
 		url : url,
 		type : 'GET',
