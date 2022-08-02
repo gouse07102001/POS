@@ -55,7 +55,7 @@ public class ProductDao extends AbstractDao {
 		return query.getResultList();
 	}
 	
-	public double getMrpByBarcode(String barcode) {
+	public Double getMrpByBarcode(String barcode) {
         Query query = em.createQuery(SELECT_MRP_BY_BARCODE);
         query.setParameter("barcode", barcode);
         return (Double) query.getSingleResult();
@@ -74,8 +74,5 @@ public class ProductDao extends AbstractDao {
 		return em.createQuery(jpql, ProductPojo.class);
 	}
 
-	public List<ProductPojo> getAllBarcodes() {
-		// TODO Auto-generated method stub
-		return selectAll();
-	}
+
 }

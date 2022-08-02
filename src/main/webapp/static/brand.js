@@ -8,7 +8,7 @@ function errorDisplay(template, message) {
 	if (template === 'danger') {
 		text = 'Failed! ';
 		Toastify({
-			text: text + " " + message,
+			text:message,
 			close: true,
 			style: {
 				background: "linear-gradient(to right, #ff0000, #c75858)",
@@ -56,14 +56,12 @@ function addBrand() {
 		},
 		success: function() {
 			document.getElementById("brand-form").reset();
-			console.log("Brand created");
 			errorDisplay('success', 'Brand added successfully.');
 			getBrandList();     //...
 			return true
 		},
 		error: function(response) {
 			var reponseMessage = JSON.parse(response.responseText).message;
-			console.log("failed")
 			errorDisplay('danger', reponseMessage);
 			return false;
 		}
@@ -76,7 +74,6 @@ function updateBrand(event) {
 	//Get the ID
 	var id = $("#brand-edit-form input[name=id]").val();
 	var url = getBrandUrl() + "s/" + id;
-	console.log(id)
 	//Set the values to update
 	var $form = $("#brand-edit-form");
 	var json = toJson($form);
@@ -122,7 +119,6 @@ function getBrandList() {
 
 function displayEditBrand(id) {
 	let url = getBrandUrl() + "s/" + id;
-	console.log(id, url)
 	$.ajax({
 		url: url,
 		type: 'GET',
@@ -157,14 +153,12 @@ function downloadErrors() {
 //HELPER METHOD
 function toJson($form) {
 	var serialized = $form.serializeArray();
-	console.log(serialized);
 	var s = '';
 	var data = {};
 	for (s in serialized) {
 		data[serialized[s]['name']] = serialized[s]['value']
 	}
 	var json = JSON.stringify(data);
-	console.log(json);
 	return json;
 }
 
@@ -299,7 +293,6 @@ function writeFileData(arr) {
 		escapeChar: '',
 		delimiter: "\t"
 	};
-	console.log(arr)
 	var data = Papa.unparse(arr, config);
 	var blob = new Blob([data], { type: 'text/tsv;charset=utf-8;' });
 	var fileUrl = null;
@@ -361,7 +354,6 @@ $(document).ready(getBrandList);
 
 
 function displayBrandList(tabledata) {
-	console.log(tabledata)
 	var $tbody = $('#brand-table').find('tbody');
 	$tbody.empty();
 	var state = {
@@ -393,7 +385,6 @@ function displayBrandList(tabledata) {
 		var wrapper = document.getElementById('pagination-wrapper')
 
 		wrapper.innerHTML = ``
-		console.log('Pages:', pages)
 
 		var maxLeft = (state.page - Math.floor(state.window / 2))
 		var maxRight = (state.page + Math.floor(state.window / 2))
@@ -440,14 +431,11 @@ function displayBrandList(tabledata) {
 	//UI DISPLAY METHODS
 
 	function buildTable() {
-		console.log('Printing Brand data');
 		var table = $('#brand-table')
 		var data = pagination(state.querySet, state.page, state.rows)
 		var myList = data.querySet
-		console.log(tabledata)
 		for (var i in myList) {
 			var p = myList[i];
-			console.log(p)
 			var buttonHtml = '<button class="btn btn-outline-primary btn-sm" onclick= "displayEditBrand(' + p.brandId
 				+ ')" >Edit</button>'
 			var row = '<tr>'

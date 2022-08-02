@@ -42,7 +42,6 @@ function updateInventory(event) {
 		error: function(response, status, error) {
 			var responseMessage = JSON.parse(response.responseText).message;
 			var responseMessage = JSON.parse(response.responseText).message;
-			console.log(responseMessage)
 			errorDisplay('danger', responseMessage);
 			return false;
 		}
@@ -85,7 +84,6 @@ function addInventory() {
 		error: function(response, status, error) {
 			var responseMessage = JSON.parse(response.responseText).message;
 			var responseMessage = JSON.parse(response.responseText).message;
-			console.log(responseMessage)
 			errorDisplay('danger', responseMessage);
 			return false;
 		}
@@ -137,7 +135,6 @@ function updateInventory1() {
 	var id = document.getElementById("editProduct").value
 	var url = getInventoryUrl() + "/" + id;
 	// Set the values to update
-	console.log(url)
 	var $form = $("#edit-inventory-form");
 	var json = toJson($form);
 	$.ajax({
@@ -169,7 +166,6 @@ function getInventoryList() {
 		url: url,
 		type: 'GET',
 		success: function(data) {
-			console.log(data)
 			displayInventoryList(data);
 			return true;
 		},
@@ -287,7 +283,6 @@ function getInventory() {
 		url: url,
 		type: 'GET',
 		success: function(data) {
-			console.log(data)
 			addProductNames(0, data);
 			return true;
 		},
@@ -304,7 +299,6 @@ function addProductNames(i, data) {
 		return true;
 	}
 	var url = getProductUrl() + "s/search/" + data[i].barcode;
-	console.log(data[i])
 	$.ajax({
 		url: url,
 		type: 'GET',
@@ -326,7 +320,6 @@ function addProductNames(i, data) {
 function uploadRowsInventory() {
 	// Process next row
 	var json = JSON.stringify(fileDataInventory);
-	console.log(fileDataInventory)
 	var url = getInventoryUrl() + "/list";
 	var index=0
 	for (obj in json) {
@@ -372,7 +365,6 @@ function uploadRowsInventory() {
 			let str = exception.substring(0, index)
 			var row = fileDataInventory[value];
 			value++
-			console.log(exception)
 			row.error = str + " in Line number " + value;
 			errorDataInventory.push(row);
 			updateUploadDialogInventory()
@@ -442,7 +434,6 @@ function displayInventory(data, id) {
 	var pro = document.getElementById("editProduct");
 	var option = document.createElement('option');
 	option.value = data.productId;
-	console.log(data)
 	option.innerHTML = data.barcode;
 	pro.appendChild(option);
 	$("#edit-inventory-form input[name=editProduct]").val(
@@ -471,7 +462,7 @@ function errorDisplay(template, message) {
 	if (template === 'danger') {
 		text = 'Failed! ';
 		Toastify({
-			text: text + " " + message,
+			text:message,
 			close: true,
 			style: {
 				background: "linear-gradient(to right, #ff0000, #c75858)",
@@ -512,7 +503,6 @@ $(document).ready(getInventory);
 
 
 function displayInventoryList(tabledata) {
-	console.log(tabledata)
 	var $tbody = $('#inventory-table').find('tbody');
 	$tbody.empty();
 	var state = {
@@ -543,7 +533,6 @@ function displayInventoryList(tabledata) {
 		var wrapper = document.getElementById('pagination-wrapper')
 
 		wrapper.innerHTML = ``
-		console.log('Pages:', pages)
 
 		var maxLeft = (state.page - Math.floor(state.window / 2))
 		var maxRight = (state.page + Math.floor(state.window / 2))

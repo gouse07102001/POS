@@ -13,10 +13,6 @@ function getProductUrl() {
 function postToBackend(){
 	var url = $("meta[name=baseUrl]").attr("content") + "/api/order-details";
 	var json = JSON.stringify(orderItemsData)
-	console.log(json)
-	/*if(orderItemsData.length == 0){
-		return false
-	}*/
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -205,9 +201,7 @@ function deleteOrderItemsData(){
 
 function createOrder(event) {
 	var json = JSON.stringify(orderItemsData);
-	console.log(orderItemsData)
 	var url = getOrderItemUrl();
-	console.log(url)
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -407,7 +401,6 @@ function deleteOrderItem(i) {
 	grandTotal -= Number(orderItemsData[i].quantity * orderItemsData[i].sellingPrice);
 	
 	orderItemsData.splice(i, 1)
-	//console.log(orderItemsData[i])
 	postToBackend()
 	errorDisplay('success', "Order Item Deleted");
 	displayOrderItemList(1);
@@ -428,7 +421,6 @@ function addProductNamesOrder(i) {
 			orderItemsData[i].productName = pojo.productName;
 			orderItemsData[i].productId= pojo.productId;
 			orderItemsData[i].amount = (orderItemsData[i].sellingPrice) * (orderItemsData[i].quantity);
-			//console.log(orderItemsData[i])
 			addProductNamesOrder(i + 1);
 		},
 		error: function(response) {
@@ -453,7 +445,6 @@ function displayOrderItemList(flag = 0) {
 	}
 
 	for (var i in orderItemsData) {
-		console.log(orderItemsData[i].productName)
 		var buttonHtml = ' <button class="btn btn-outline-primary btn-sm"  onclick="displayOrderItem(\'' + i + '\')">Edit</button>';
 		buttonHtml += ' <button class="btn btn-outline-danger btn-sm"  onclick="deleteOrderItem(\'' + i + '\')">Delete</button>';
 		var row = '<tr>'
@@ -501,7 +492,7 @@ function errorDisplay(template, message) {
 	if (template === 'danger') {
 		text = 'Failed! ';
 		Toastify({
-			text: text + " " + message,
+			text:message,
 			close: true,
 			style: {
 				background: "linear-gradient(to right, #ff0000, #c75858)",
@@ -544,14 +535,12 @@ $(document).ready(initOrderItem);
 //HELPER METHOD
 function toJson($form) {
 	var serialized = $form.serializeArray();
-	console.log(serialized);
 	var s = '';
 	var data = {};
 	for (s in serialized) {
 		data[serialized[s]['name']] = serialized[s]['value']
 	}
 	var json = JSON.stringify(data);
-	console.log(json);
 	return json;
 }
 

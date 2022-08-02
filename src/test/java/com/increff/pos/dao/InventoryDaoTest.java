@@ -35,6 +35,12 @@ public class InventoryDaoTest extends AbstractUnitTest {
         inventoryDao.update(inventoryPojo.getInventoryId(), inventoryPojo.getQuantity());
         InventoryPojo p = inventoryDao.getIdByBarcode(inventoryPojo.getBarcode());
         assertEquals(inventoryPojo.getQuantity(), p.getQuantity());
+        try {
+        	p = inventoryDao.getIdByBarcode("abcd");
+        }
+        catch(Exception e) {
+        	assertEquals("Barcode Not Found",e.getMessage());
+        }
     }
 
     // Test for getting an inventory
@@ -47,18 +53,16 @@ public class InventoryDaoTest extends AbstractUnitTest {
         b.setBrand("nestle");
         b.setCategory("dairy");
         brandService.add(b);
-        //System.out.println("Invnetory Test getInvPojo rand" + b.getId());
         double mrp = 10.25;
         p.setBarcode(barcode);
         p.setBrandCategory(b.getBrandId());
         p.setProductName("ProDuct");
         p.setMrp(mrp);
         productService.add(p);
-        int quantity = 10;
+        Integer quantity = 10;
         i.setProductId(p.getProductId());
         i.setBarcode(barcode);
 
-        //System.out.println("Invnetory Test getInvPojo pro" + p.getProduct_id());
         i.setQuantity(quantity);
         return i;
     }

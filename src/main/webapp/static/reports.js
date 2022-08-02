@@ -62,7 +62,6 @@ function getBrandReport() {
 		url: url,
 		type: 'GET',
 		success: function(data) {
-			console.log(data)
 			printBrandReport(data);
 			errorDisplay('success', "Brand Report Generated SuccessFully");
 		},
@@ -192,7 +191,7 @@ function errorDisplay(template, message) {
 	if (template === 'danger') {
 		text = 'Failed! ';
 		Toastify({
-			text: text + " " + message,
+			text:message,
 			close: true,
 			style: {
 				background: "linear-gradient(to right, #ff0000, #c75858)",

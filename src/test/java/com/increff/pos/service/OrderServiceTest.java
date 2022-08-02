@@ -40,6 +40,12 @@ public class OrderServiceTest extends AbstractUnitTest {
         orderService.addOrder(op);
         ;
         assertEquals(orderService.getCheckOrder(op.getOrderId()).getOrderId(), op.getOrderId());
+        try{
+          orderService.getCheckOrder(100);
+        }
+        catch(Exception e){
+            assertEquals("Order with the given ID does not exist",e.getMessage());
+        }
     }
 
     //  Test for adding order

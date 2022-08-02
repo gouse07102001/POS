@@ -17,7 +17,4 @@ public abstract class AbstractDao {
         return em.createQuery(jpql, clazz);
     }
 
-    protected EntityManager em() {
-        return em;
-    }
 }

@@ -14,7 +14,6 @@ function getProductList() {
 		url: url,
 		type: 'GET',
 		success: function(data) {
-			console.log("Product data fetched");
 			getBrandCategory(0, data);
 			//...
 		},
@@ -57,7 +56,6 @@ function addProduct(event) {
 	var json = toJson($form);
 	var url = getProductUrl() + "s";
 
-	//console.log($form)
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -88,7 +86,6 @@ function updateProduct(event) {
 	//Set the values to update
 	var $form = $("#product-edit-form");
 	var json = toJson($form);
-	console.log(json)
 	$.ajax({
 		url: url,
 		type: 'PUT',
@@ -97,7 +94,6 @@ function updateProduct(event) {
 			'Content-Type': 'application/json'
 		},
 		success: function(response) {
-			console.log("Product update");
 			getProductList();
 			$('#edit-product-modal').modal('toggle');
 			errorDisplay('success', 'Product has been updated')
@@ -118,13 +114,10 @@ function updateProduct(event) {
 
 function displayEditProduct(id) {
 	var url = getProductUrl() + "s/" + id;
-	console.log(url)
 	$.ajax({
 		url: url,
 		type: 'GET',
 		success: function(data) {
-			console.log("Product data fetched!!");
-			console.log(data);
 			displayProduct(data, id);     //...
 		},
 		error: function(response) {
@@ -238,7 +231,6 @@ function uploadRows() {
 			var row = fileData[value];
 			value++
 			row.error = str + " in Line number " + value;
-			console.log(row)
 			errorData.push(row);
 			updateUploadDialog()
 			errorDisplay('danger', row.error)
@@ -307,14 +299,12 @@ function displayUploadData() {
 //HELPER METHOD
 function toJson($form) {
 	var serialized = $form.serializeArray();
-	console.log(serialized);
 	var s = '';
 	var data = {};
 	for (s in serialized) {
 		data[serialized[s]['name']] = serialized[s]['value']
 	}
 	var json = JSON.stringify(data);
-	console.log(json);
 	return json;
 }
 
@@ -390,7 +380,6 @@ function addBC(data) {
 }
 
 function editBrandCategory(brandId) {
-	console.log(brandId)
 	var url = getBrandUrl() + "s";
 	$.ajax({
 		url: url,
@@ -411,7 +400,6 @@ function getBrandCategoryDetails(datafull, brandId) {
 		url: url,
 		type: 'GET',
 		success: function(data) {
-			console.log(data)
 			makeDropDown(datafull, data);     //...
 		},
 		error: function(response) {
@@ -466,7 +454,7 @@ function errorDisplay(template, message) {
 	if (template === 'danger') {
 		text = 'Failed! ';
 		Toastify({
-			text: text + " " + message,
+			text:message,
 			close: true,
 			style: {
 				background: "linear-gradient(to right, #ff0000, #c75858)",
@@ -505,14 +493,11 @@ function getBarcodes() {
 		url: product_url,
 		type: 'GET',
 		success: function(values) {
-			console.log(values);
-			console.log("List of Brand_Category values  Fetched from Brand table");
 			for (const val of values) {
 				var option = document.createElement("option");
 				option.value = val;
 				option.innerHTML = val;
 				var myList = document.getElementById("myList");
-				console.log(myList)
 				myList.appendChild(option);
 			}
 			var label = document.createElement("label");
@@ -533,7 +518,6 @@ function getBarcodes() {
 
 
 function displayProductList(tabledata) {
-	console.log(tabledata)
 	var $tbody = $('#product-table').find('tbody');
 	$tbody.empty();
 	var state = {
@@ -565,7 +549,6 @@ function displayProductList(tabledata) {
 		var wrapper = document.getElementById('pagination-wrapper')
 
 		wrapper.innerHTML = ``
-		console.log('Pages:', pages)
 
 		var maxLeft = (state.page - Math.floor(state.window / 2))
 		var maxRight = (state.page + Math.floor(state.window / 2))
@@ -614,14 +597,12 @@ function displayProductList(tabledata) {
 
 
 	function buildTable(data) {
-		console.log('Printing Product data');
 		var table = $('#product-table')
 		var data = pagination(state.querySet, state.page, state.rows)
 		var myList = data.querySet
 		for (var i in myList) {
 			let p = myList[i];
 			var buttonHtml = ' <button class="btn btn-outline-primary btn-sm" onclick="displayEditProduct(' + p.productId + ')">Edit</button>'
-			//console.log("get method is successfull")
 			var row = '<tr>'
 				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+p.barcode+'>' + p.barcode + '</div></td>'
 				+ '<td><div style="width:180px;white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;"data-toggle="tooltip" data-placement="bottom"title='+p.productName+'>' + p.productName + '</div></td>'

@@ -11,6 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "OrderDetails", uniqueConstraints = @UniqueConstraint(columnNames = "orderId"))
 public class OrderPojo {
@@ -21,18 +26,6 @@ public class OrderPojo {
     @Column(nullable = false)
     private LocalDateTime time;
 	
-	public Integer getOrderId() {
-		return orderId;
-	}
-	public void setOrderId(Integer orderId) {
-		this.orderId = orderId;
-	}
-	public LocalDateTime getTime() {
-		return time;
-	}
-	public void setTime(LocalDateTime time) {
-		this.time = time;
-	}
 
 
 }

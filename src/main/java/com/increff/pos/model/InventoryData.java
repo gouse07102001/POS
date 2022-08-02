@@ -1,16 +1,13 @@
 package com.increff.pos.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class InventoryData extends InventoryForm {
 
 	private Integer inventoryId;
 
-	public Integer getInventoryId() {
-		return inventoryId;
-	}
-
-	public void setInventoryId(Integer inventoryId) {
-		this.inventoryId = inventoryId;
-	}
-	
 	
 }

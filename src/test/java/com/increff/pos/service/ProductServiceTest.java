@@ -32,7 +32,7 @@ public class ProductServiceTest extends AbstractUnitTest {
     public void testGetUsingBarcode() throws Exception {
         ProductPojo ProductPojo = getProductPojoTest();
         productService.add(ProductPojo);
-        ProductPojo ProductPojo2 = productService.getUsingBarcode(ProductPojo.getBarcode());
+        ProductPojo ProductPojo2 = productService.get(ProductPojo.getBarcode());
         assertEquals(ProductPojo.getProductName(), ProductPojo2.getProductName());
         assertEquals(ProductPojo.getBrandCategory(), ProductPojo2.getBrandCategory());
         assertEquals(ProductPojo.getMrp(), ProductPojo2.getMrp(), 0.01);

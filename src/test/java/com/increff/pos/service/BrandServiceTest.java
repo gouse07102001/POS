@@ -15,18 +15,6 @@ public class BrandServiceTest extends AbstractUnitTest {
 
     @Autowired
     private BrandService service;
-
-
-    //  Test for adding brand
-    @Test
-    public void testAdd() throws ApiException {
-        BrandPojo p = new BrandPojo();
-        p.setBrand("nestle");
-        p.setCategory("dairy");
-        service.add(p);
-    }
-
-
     //  Test for normalizing
     @Test
     public void testNormalize() {

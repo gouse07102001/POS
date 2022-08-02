@@ -54,7 +54,7 @@ public class InventoryController {
     @RequestMapping(path = "/api/inventory/{inventoryId}", method = RequestMethod.PUT)
     public void update(@PathVariable Integer inventoryId, @RequestBody InventoryForm form)
             throws Exception {
-        dto.update(inventoryId, form);
+        dto.updateInventoryForm(inventoryId, form);
     }
 
 

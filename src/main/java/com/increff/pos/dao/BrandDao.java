@@ -57,9 +57,4 @@ public class BrandDao extends AbstractDao {
 		return em.createQuery(jpql, BrandPojo.class);
 	}
 
-	public List<BrandPojo> getAllBrandCategory() {
-		// TODO Auto-generated method stub
-		return selectAll();
-		
-	}
 }

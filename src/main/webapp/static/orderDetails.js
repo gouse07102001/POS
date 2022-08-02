@@ -11,7 +11,6 @@ function getOrdersList() {
 		type : 'GET',
 		success : function(data) {
 			order_data = data;
-			console.log(data)
 			getSP(0);
 		},
 		error : function(response) {
@@ -62,7 +61,7 @@ function errorDisplay(template, message){
 	if(template === 'danger') {
 		text = 'Failed! ';
 		Toastify({
-            text: text + " " + message,
+            text:message,
             close: true,
             style: {
                 background: "linear-gradient(to right, #ff0000, #c75858)",
@@ -93,7 +92,6 @@ $(document).ready(init);
 $(document).ready(getOrdersList);
 
 function displayOrdersList(tabledata) {
-	console.log(tabledata)
 	var $tbody = $('#orders-table').find('tbody');
 	$tbody.empty();
 	var state = {
@@ -125,7 +123,6 @@ function displayOrdersList(tabledata) {
 		var wrapper = document.getElementById('pagination-wrapper')
 
 		wrapper.innerHTML = ``
-		console.log('Pages:', pages)
 
 		var maxLeft = (state.page - Math.floor(state.window / 2))
 		var maxRight = (state.page + Math.floor(state.window / 2))
@@ -220,13 +217,11 @@ function getOrder(orderId){
 	var t="/pos/api/order/invoice/"+id;
 	document.getElementById("invoice").href=t;
 	var url = getOrderUrl() + id;
-	console.log(url);
 	$.ajax({
 		url : url,
 		type : 'GET',
 		success : function(data) {
 			order_data=data;
-			console.log(order_data)
 			getBarcodes(0);
 		},
 		error : function(response) {
@@ -260,7 +255,6 @@ function getBarcodes(i){
 function displayOrderList(order_data) {
 	var $tbody = $('#order-table').find('tbody');
 	$tbody.empty();
-	console.log(order_data)
 	for (var i in order_data) {
 
 		var e = order_data[i];

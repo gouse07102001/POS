@@ -25,25 +25,25 @@ public class ProductService {
 		normalize(p);
 		dao.insert(p);
 	}
+
 	@Transactional
 	public void addAll(List<ProductPojo> pojo) {
-		for(ProductPojo iter:pojo) {
+		for (ProductPojo iter : pojo) {
 			normalize(iter);
 			dao.insert(iter);
 		}
 	}
 
-
 	@Transactional(rollbackOn = ApiException.class)
 	public ProductPojo get(Integer id) throws Exception {
 		return getCheck(id);
 	}
-	
+
 	@Transactional
-    public List<ProductPojo> getUsingBrandCategory(Integer brandCategory) {
-        return dao.selectByBrandCategory(brandCategory);
-    }
-	
+	public List<ProductPojo> getUsingBrandCategory(Integer brandCategory) {
+		return dao.selectByBrandCategory(brandCategory);
+	}
+
 	@Transactional(rollbackOn = ApiException.class)
 	public ProductPojo get(String barcode) throws Exception {
 		return getCheckBarcode(barcode);
@@ -53,13 +53,13 @@ public class ProductService {
 	public List<ProductPojo> getAll() {
 		return dao.selectAll();
 	}
-	
-	@Transactional
-    public ProductPojo getBarcodeById(Integer id) throws Exception {
-        return dao.select(id);
-    }
 
-	@Transactional(rollbackOn  = ApiException.class)
+	@Transactional
+	public ProductPojo getBarcodeById(Integer id) throws Exception {
+		return dao.select(id);
+	}
+
+	@Transactional(rollbackOn = ApiException.class)
 	public void update(Integer id, ProductPojo p) throws Exception {
 		normalize(p);
 		ProductPojo ex = getCheck(id);
@@ -69,35 +69,41 @@ public class ProductService {
 		ex.setMrp(p.getMrp());
 		dao.update(p);
 	}
-	
+
 	@Transactional(rollbackOn = ApiException.class)
-    public ProductPojo checkBarcodeSwap(String barcode) throws Exception {
-		if(StringUtil.isEmpty(barcode)) {
+	public ProductPojo checkBarcodeSwap(String barcode) throws Exception {
+		if (StringUtil.isEmpty(barcode)) {
 			throw new ApiException("Barcode cannot be empty");
 		}
-        ProductPojo p = dao.selectByParam(barcode);
-        if (p == null) {
-            throw new ApiException("Barcode doesnot exist");
-        }
-        return p;
-    }
-	
-	
-	
+		ProductPojo p = dao.selectByParam(barcode);
+		if (p == null) {
+			throw new ApiException("Barcode does not exist");
+		}
+		return p;
+	}
+
 	@Transactional
-    public double getMrpByBarcode(String barcode) throws Exception {
-        return dao.getMrpByBarcode(barcode);
-    }
+	public Double getMrpByBarcode(String barcode) throws Exception {
+		Double mrp = null;
+		try {
+			mrp = dao.getMrpByBarcode(barcode);
+		} catch (Exception e) {
+			if (mrp == null) {
+				throw new ApiException("Barcode does not exist");
+			}
+		}
+		return mrp;
+	}
 
 	@Transactional
 	public ProductPojo getCheck(Integer productId) throws Exception {
 		ProductPojo p = dao.select(productId);
 		if (p == null) {
-			throw new ApiException("Product with given ID does not exist, id: " + productId);
+			throw new ApiException("Product with given ID does not exist");
 		}
 		return p;
 	}
-	
+
 	@Transactional(rollbackOn = ApiException.class)
 	public ProductPojo getCheckBarcode(String barcode) throws Exception {
 		ProductPojo p = dao.selectByBarcode(barcode);
@@ -110,41 +116,29 @@ public class ProductService {
 	}
 
 	public List<String> getAllBarcodes() {
-		List<ProductPojo> list = new ArrayList<ProductPojo>();
-		list = getAll();
+		List<ProductPojo> list = getAll();
 		List<String> barcodes = new ArrayList<String>();
-		for(ProductPojo iter:list) {
+		for (ProductPojo iter : list) {
 			barcodes.add(iter.getBarcode());
 		}
 		return barcodes;
-		
+
 	}
-	
+
+
 	@Transactional(rollbackOn = ApiException.class)
-    public ProductPojo checkBarcode(String barcode) throws Exception {
-        ProductPojo p = dao.selectByBarcode(barcode);
-        if (p != null) {
-            throw new ApiException("Barcode already exist");
-        }
-        return p;
-    }
+	public ProductPojo getUsingBarcode(String barcode) throws Exception {
+		ProductPojo p = dao.selectByBarcode(barcode);
+		if (p == null) {
+			throw new ApiException("Barcode does not exist");
+		}
+		return p;
+	}
 
-    @Transactional(rollbackOn = ApiException.class)
-    public ProductPojo getUsingBarcode(String barcode) throws Exception {
-        ProductPojo p = dao.selectByBarcode(barcode);
-        if (p == null) {
-            throw new ApiException("Barcode does not exist");
-        }
-        return p;
-    }
-    
-    @Transactional(rollbackOn = ApiException.class)
-    public ProductPojo getByBarcode(String barcode) throws Exception {
-        ProductPojo p = dao.selectByBarcode(barcode);
-        return p;
-    }
-
-
-	
+	@Transactional(rollbackOn = ApiException.class)
+	public ProductPojo getByBarcode(String barcode) throws Exception {
+		ProductPojo p = dao.selectByBarcode(barcode);
+		return p;
+	}
 
 }

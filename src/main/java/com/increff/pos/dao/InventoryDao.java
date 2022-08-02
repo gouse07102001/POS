@@ -80,9 +80,4 @@ public class InventoryDao extends AbstractDao {
     Query getQueryUpdate(String jpql) {
         return em.createQuery(jpql);
     }
-
-    TypedQuery<InventoryPojo> getQueryInventory(String jpql) {
-        return em.createQuery(jpql, InventoryPojo.class);
-    }
-	
 }

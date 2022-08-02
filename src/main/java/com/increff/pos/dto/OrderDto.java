@@ -61,17 +61,16 @@ public class OrderDto {
 
     private static final String PATH_TO_Order_XSL = "./templateInvoice.xsl";
 
- 
+
     public OrderData add(List<OrderItemsForm> form) throws Exception {
 
-       validate(form);
+        validate(form);
         List<OrderItemsPojo> orderItems = checkInventory(form);
 
         OrderPojo order = addTime();
         service.addOrder(order);
         updateInventory(orderItems);
         for (OrderItemsPojo var : orderItems) {
-        	System.out.println(order.getOrderId());
             var.setOrderId(order.getOrderId());
             service.add(var);
         }
@@ -105,15 +104,14 @@ public class OrderDto {
 
     public List<OrderData> getAllOrders() {
         List<OrderPojo> pojoList = service.getAllOrders();
-        
+
         List<OrderData> dataList = new ArrayList<OrderData>();
         for (OrderPojo p : pojoList) {
             dataList.add(convert(p));
         }
         return dataList;
     }
-    
-   
+
 
     @Transactional
     public List<OrderItemsPojo> checkInventory(List<OrderItemsForm> orderItemForms) throws Exception {
@@ -122,8 +120,8 @@ public class OrderDto {
 
             ProductPojo p = productService.getCheck(var.getProductId());
             InventoryPojo inventoryPojo = inventoryService.getInventoryByProductID(var.getProductId());
-            getCheckInventoryQuantity(var.getQuantity(), inventoryPojo,p.getBarcode());
-            getCheckMrp(var.getSellingPrice(),p.getMrp(),p.getBarcode());
+            getCheckInventoryQuantity(var.getQuantity(), inventoryPojo, p.getBarcode());
+            getCheckMrp(var.getSellingPrice(), p.getMrp(), p.getBarcode());
             orderItems.add(convert(var));
         }
         return orderItems;
@@ -131,12 +129,13 @@ public class OrderDto {
 
     public void getCheckMrp(Double sp, Double mrp, String barcode) throws Exception {
         if (sp > mrp) {
-            throw new ApiException("Selling Price should not be greater than MRP for Barcode: " + barcode + "; MRP: " + mrp);
+            throw new ApiException("Selling Price should not be greater than MRP");
         }
     }
+
     public void getCheckInventoryQuantity(Integer quantity, InventoryPojo inventoryPojo, String barcode) throws ApiException {
         if (quantity > inventoryPojo.getQuantity()) {
-            throw new ApiException("Insufficient inventory for Barcode: " + barcode + "; Available inventory: " + inventoryPojo.getQuantity());
+            throw new ApiException("Insufficient inventory");
         }
     }
 
@@ -144,14 +143,11 @@ public class OrderDto {
     public void updateInventory(List<OrderItemsPojo> orderItems) throws Exception {
         service.update(orderItems);
     }
-    
-    
-    
-   
 
-    public void make(Integer id) throws ParserConfigurationException, TransformerException, Exception {
+
+    public void make(Integer id) throws Exception {
         String xmlFilePath = "./src/main/resources/com/increff/pos/invoice" + id + ".xml";
-        
+
         List<OrderItemsPojo> datalist = service.getByOrderId(id);
         DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
@@ -171,12 +167,12 @@ public class OrderDto {
             count.appendChild(document.createTextNode(Integer.toString(sno)));
             product.appendChild(count);
             Element product_name = document.createElement("name");
-            if(p.getProductName().length() > 15) {
-            	p.setProductName(p.getProductName().substring(0, 12) + "...");
+            if (p.getProductName().length() > 15) {
+                p.setProductName(p.getProductName().substring(0, 12) + "...");
             }
-           if(p.getProductName().equals("product")) {
-        	   xmlFilePath = "./src/test/resources/com/increff/pos/invoice" + id + ".xml";
-           }
+            if (p.getProductName().equalsIgnoreCase("product")) {
+                xmlFilePath = "./src/test/resources/com/increff/pos/invoice" + id + ".xml";
+            }
             product_name.appendChild(document.createTextNode(p.getProductName()));
             product.appendChild(product_name);
             Element qty = document.createElement("qty");
@@ -211,8 +207,7 @@ public class OrderDto {
         transformer.transform(domSource, streamResult);
     }
 
-    public void createInvoice(HttpServletResponse response, Integer orderId)
-            throws Exception {
+    public void createInvoice(HttpServletResponse response, Integer orderId) throws Exception {
         try {
 
             FopFactory fopFactory = FopFactory.newInstance(new File(".").toURI());
@@ -236,9 +231,8 @@ public class OrderDto {
             e.printStackTrace();
         }
     }
-    
-    
-    
+
+
     private static OrderItemsData convert(OrderItemsPojo p) {
         OrderItemsData d = new OrderItemsData();
         d.setOrderId(p.getOrderId());
@@ -269,11 +263,11 @@ public class OrderDto {
 
         return d;
     }
-    
+
     public static OrderListForm convert(OrderListPojo p) {
-    	OrderListForm d = new OrderListForm();
-    	d.setQuantity(p.getQuantity());
-    	d.setProductId(p.getProductId());
+        OrderListForm d = new OrderListForm();
+        d.setQuantity(p.getQuantity());
+        d.setProductId(p.getProductId());
         d.setProductName(p.getProductName());
         d.setSellingPrice(p.getSellingPrice());
         d.setBarcode(p.getBarcode());
@@ -281,13 +275,13 @@ public class OrderDto {
 
         return d;
     }
-    
+
     public static OrderListPojo convert(OrderListForm p) {
-    	OrderListPojo d = new OrderListPojo();
+        OrderListPojo d = new OrderListPojo();
         d.setQuantity(p.getQuantity());
-        d.setProductName(p.getProductName());
+        d.setProductName(p.getProductName().trim());
         d.setSellingPrice(p.getSellingPrice());
-        d.setBarcode(p.getBarcode());
+        d.setBarcode(p.getBarcode().trim());
         d.setAmount(p.getAmount());
 
         return d;
@@ -327,29 +321,27 @@ public class OrderDto {
             }
         }
     }
-    
+
     public void addOrderDetails(List<OrderListForm> forms) throws Exception {
-    	List<OrderListPojo> pojos = new ArrayList<OrderListPojo>();
-    	for(OrderListForm form:forms) {
-    		pojos.add(convert(form));
-    	}
-		service.addOrderDetails(pojos);
-	}
-    
+        List<OrderListPojo> pojos = new ArrayList<OrderListPojo>();
+        for (OrderListForm form : forms) {
+            pojos.add(convert(form));
+        }
+        service.addOrderDetails(pojos);
+    }
+
     public List<OrderListForm> getAllOrderDetails() {
-    	List<OrderListPojo> pojoList = service.getAllOrderDetails();
-    	List<OrderListForm> dataList = new ArrayList<OrderListForm>();
+        List<OrderListPojo> pojoList = service.getAllOrderDetails();
+        List<OrderListForm> dataList = new ArrayList<OrderListForm>();
         for (OrderListPojo pojo : pojoList) {
             dataList.add(convert(pojo));
         }
         return dataList;
-	}
-    
+    }
+
     public void deleteOrderList() {
-		// TODO Auto-generated method stub
-    	service.deleteOrderList();
-		
-	}    
-    
+        service.deleteOrderList();
+    }
+
 
 }

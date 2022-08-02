@@ -58,7 +58,7 @@ public class TestDataUtil {
         productData.setBrandCategory(brandCategory);
         productData.setProductId(id);
         productData.setMrp(mrp);
-        productData.setproductName(name);
+        productData.setProductName(name);
         return productData;
     }
 
@@ -70,7 +70,7 @@ public class TestDataUtil {
         double mrp = 10.50;
         f.setBrandCategory(brandCategory);
         f.setMrp(mrp);
-        f.setproductName(name);
+        f.setProductName(name);
         return f;
     }
 
@@ -91,7 +91,7 @@ public class TestDataUtil {
         ProductForm productForm = new ProductForm();
         productForm.setBrandCategory(brandCategory);
         productForm.setBarcode(barcode);
-        productForm.setproductName(name);
+        productForm.setProductName(name);
         productForm.setMrp(mrp);
         return productForm;
     }

@@ -8,6 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import lombok.Getter;
+import lombok.Setter;
+@Getter
+@Setter
 @Entity
 @Table(name="Inventory", uniqueConstraints = @UniqueConstraint(columnNames = "productId"))
 public class InventoryPojo {
@@ -20,31 +24,5 @@ public class InventoryPojo {
     @Column(nullable = false)
     private Integer quantity;
     @Column(nullable = false)
-    private String barcode;
-	public Integer getInventoryId() {
-		return inventoryId;
-	}
-	public void setInventoryId(Integer inventoryId) {
-		this.inventoryId = inventoryId;
-	}
-	public Integer getProductId() {
-		return productId;
-	}
-	public void setProductId(Integer productId) {
-		this.productId = productId;
-	}
-	public Integer getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-	public String getBarcode() {
-		return barcode;
-	}
-	public void setBarcode(String barcode) {
-		this.barcode = barcode;
-	}
-	
-	
+    private String barcode;	
 }

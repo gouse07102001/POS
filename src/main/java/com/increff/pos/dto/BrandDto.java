@@ -36,7 +36,6 @@ public class BrandDto {
 	}
 
 	public void addAll(List<BrandForm> form) throws Exception {
-		// TODO Auto-generated method stub
 		List<BrandPojo> pojo = new ArrayList<BrandPojo>();
 		Integer index = 0;
 		for(BrandForm iter:form) {
@@ -61,15 +60,8 @@ public class BrandDto {
 		return convert(d);
 	}
 
-	public BrandData getCheck(String brand, String category) throws Exception {
-		// TODO Auto-generated method stub
-		BrandPojo p = service.getCheck(brand, category);
-		return convert(p);
-	}
-	
 	
 	public List<BrandData> getAll() {
-		// TODO Auto-generated method stub
 		List<BrandPojo> list = service.getAll();
 		List<BrandData> list_brandData = new ArrayList<BrandData>();
 		for(BrandPojo i:list)
@@ -106,15 +98,16 @@ public class BrandDto {
 
 	private static BrandPojo convert(BrandForm f) {
 		BrandPojo p = new BrandPojo();
-		p.setBrand(f.getBrand().toLowerCase());
-		p.setCategory(f.getCategory().toLowerCase());
+		p.setBrand(f.getBrand().toLowerCase().trim());
+		p.setCategory(f.getCategory().toLowerCase().trim());
 		return p;
 	}
 	
 	
 	private boolean isValid(BrandForm d,Integer brandId) {
 		List<BrandPojo> p = service.getAll();
-		
+		d.setBrand(d.getBrand().trim());
+		d.setCategory(d.getCategory().trim());
 		for(BrandPojo i:p)
 		{
 			if((i.getBrand().equalsIgnoreCase(d.getBrand())) && (i.getCategory().equalsIgnoreCase(d.getCategory())) && (brandId != i.getBrandId()))
@@ -137,20 +130,9 @@ public class BrandDto {
 	}
 
 	public List<String> getAllBrandCategory() {
-		
 		return service.getAllBrandCategory();
 	}
-	
-	public void checkBrandExits(BrandPojo p) throws Exception {
 
-        List<BrandPojo> all = service.getAll();
-        for (BrandPojo brand : all) {
-            if (brand.getBrand().equals(p.getBrand()) && brand.getCategory().equals(p.getCategory())) {
-                throw new ApiException("Brand Category pair already exits");
-            }
-        }
-
-    }
 
 
 	

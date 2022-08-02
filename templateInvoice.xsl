@@ -18,15 +18,15 @@
 				<fo:flow flow-name="xsl-region-body">
 					<fo:block font-size="25pt" text-align="center"
 						font-family="Helvetica" font-weight="bold" space-after="2mm">
-						Order
 						Invoice
 					</fo:block>
-					<fo:block font-size="12pt" text-align="center"
+					<fo:block space-after="1cm"></fo:block>
+					<fo:block font-size="12pt" text-align="left"
 						font-family="Helvetica" font-weight="bold" space-after="5mm">
 						Order Id-
 						<xsl:value-of select="ID" />
 					</fo:block>
-					<fo:block font-size="12pt" text-align="center"
+					<fo:block font-size="12pt" text-align="left"
 						font-family="Helvetica" font-weight="bold" space-after="5mm">
 						Ordered At-
 						<xsl:value-of select="time" />
