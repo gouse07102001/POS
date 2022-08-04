@@ -37,10 +37,10 @@ public class OrderDtoTest extends AbstractUnitTest {
 
     @Autowired
     private OrderDto dto;
-    
+
     @Autowired
     private ProductDto productDto;
-    
+
     @Autowired
     private InventoryDto inventoryDto;
 
@@ -56,58 +56,52 @@ public class OrderDtoTest extends AbstractUnitTest {
     //  Test for adding order
     @Test
     public void testAdd() throws Exception {
-    	// set env var
+        // set env var
         OrderItemsForm o = getInventoryFormTest();
         List<OrderItemsForm> orders = new ArrayList<OrderItemsForm>();
         orders.add(o);
-        OrderData ord = dto.add(orders);
-        assertEquals(dto.getByOrderId(ord.getOrderId()).get(0).getQuantity().intValue(), 5);
+        OrderData orderData = dto.add(orders);
+        assertEquals(dto.getByOrderId(orderData.getOrderId()).get(0).getQuantity().intValue(), 5);
         try {
-        	orders.get(0).setQuantity(0);
-        	ord = dto.add(orders);
-        }
-        catch(Exception e) {
-        	assertEquals("Quantity cannot be empty",e.getMessage());
+            orders.get(0).setQuantity(0);
+            orderData = dto.add(orders);
+        } catch (Exception e) {
+            assertEquals("Quantity cannot be empty", e.getMessage());
         }
         try {
-        	orders.get(0).setQuantity(10);
-        	orders.get(0).setSellingPrice(0.0);
-        	ord = dto.add(orders);
-        }
-        catch(Exception e) {
-        	assertEquals("SellingPrice cannot be empty",e.getMessage());
+            orders.get(0).setQuantity(10);
+            orders.get(0).setSellingPrice(0.0);
+            orderData = dto.add(orders);
+        } catch (Exception e) {
+            assertEquals("SellingPrice cannot be empty", e.getMessage());
         }
         try {
             orders.get(0).setQuantity(5);
             orders.get(0).setSellingPrice(100000000.0);
-            ord = dto.add(orders);
-        }
-        catch(Exception e) {
-            assertEquals("Selling Price should not be greater than MRP",e.getMessage());
+            orderData = dto.add(orders);
+        } catch (Exception e) {
+            assertEquals("Selling Price should not be greater than MRP", e.getMessage());
         }
         try {
             orders.get(0).setQuantity(10);
-            ord = dto.add(orders);
-        }
-        catch(Exception e) {
-            assertEquals("Insufficient inventory",e.getMessage());
+            orderData = dto.add(orders);
+        } catch (Exception e) {
+            assertEquals("Insufficient inventory", e.getMessage());
         }
         try {
-        	orders.get(0).setProductId(0);
-        	ord = dto.add(orders);
-        }
-        catch(Exception e) {
-        	assertEquals("ProductId cannot be empty",e.getMessage());
+            orders.get(0).setProductId(0);
+            orderData = dto.add(orders);
+        } catch (Exception e) {
+            assertEquals("ProductId cannot be empty", e.getMessage());
         }
         try {
             orders.get(0).setProductId(10000);
             orders.get(0).setSellingPrice(10.0);
-            ord = dto.add(orders);
+            orderData = dto.add(orders);
+        } catch (Exception e) {
+            assertEquals("Product with given ID does not exist", e.getMessage());
         }
-        catch(Exception e) {
-            assertEquals("Product with given ID does not exist",e.getMessage());
-        }
-        
+
     }
 
     //  Test for getting order
@@ -141,22 +135,20 @@ public class OrderDtoTest extends AbstractUnitTest {
         OrderItemsData d = dto.get(orderData.getOrderId());
         assertEquals(d.getQuantity().intValue(), 5);
         assertEquals(d.getSellingPrice().intValue(), 5);
-        
+
         try {
-        	d = dto.get(1000);
-        }
-        catch(Exception e) {
-        	assertEquals("Order with given ID does not exist",e.getMessage());
+            d = dto.get(1000);
+        } catch (Exception e) {
+            assertEquals("Order with given ID does not exist", e.getMessage());
         }
     }
 
     @Test
-    public void testGetOrder(){
-        try{
+    public void testGetOrder() {
+        try {
             dto.getOrder(1000);
-        }
-        catch(Exception e){
-            assertEquals("Order with the given ID does not exist",e.getMessage());
+        } catch (Exception e) {
+            assertEquals("Order with the given ID does not exist", e.getMessage());
         }
     }
 
@@ -177,11 +169,10 @@ public class OrderDtoTest extends AbstractUnitTest {
             d.getProductId();
             d.setOrderItemId(1);
             d.getOrderItemId();
-        	dto.update(10000, o);
+            dto.update(10000, o);
 
-        }
-        catch(Exception e) {
-        	assertEquals("Order does not found",e.getMessage());
+        } catch (Exception e) {
+            assertEquals("Order does not found", e.getMessage());
         }
     }
 
@@ -198,13 +189,22 @@ public class OrderDtoTest extends AbstractUnitTest {
         assertEquals(data.getQuantity().intValue(), 5);
     }
 
-
-
     @Test
     public void testCreateInvoice() throws Exception {
+        OrderItemsForm o = getInventoryFormTest();
+        List<OrderItemsForm> orders = new ArrayList<OrderItemsForm>();
+        orders.add(o);
+        OrderData orderData = dto.add(orders);
         HttpServletResponse response = new MockHttpServletResponse();
-        dto.createInvoice(response, 1);
+        dto.createInvoice(response, orderData.getOrderId());
+        List<OrderItemsData> list = dto.getByOrderId(orderData.getOrderId());
+        Double totalRevenue=0.0;
+        for(OrderItemsData data : list){
+            totalRevenue += data.getQuantity()*data.getSellingPrice();
+        }
+        assertEquals(25.0, totalRevenue, 0);
     }
+
 
     @Test
     public void testDeleteOrderList() throws Exception {
@@ -214,35 +214,35 @@ public class OrderDtoTest extends AbstractUnitTest {
         OrderData ord = dto.add(orders);
         dto.deleteOrderList();
         List<OrderListForm> forms = dto.getAllOrderDetails();
-        assertEquals(forms.size(),0);
+        assertEquals(forms.size(), 0);
     }
-    
+
     @Test
-    public void testAddOrderDetails()throws Exception{
-    	ProductForm productForm = new ProductForm();
-    	productForm.setBarcode("bar123");
-    	productForm.setBrandCategory(1);
-    	productForm.setProductName("testing");
-    	productForm.setMrp(12.00);
-    	productDto.add(productForm);
-    	ProductData productData = productDto.getCheck("bar123");
-    	InventoryForm inventoryForm = new InventoryForm();
-    	inventoryForm.setBarcode("bar123");
-    	inventoryForm.setProductId(productData.getProductId());
-    	inventoryForm.setQuantity(1000);
-    	inventoryDto.add(inventoryForm);
-    	List<OrderListForm> forms = new ArrayList<OrderListForm>();
-    	OrderListForm form = new OrderListForm();
-    	form.setBarcode("bar123");
-    	form.setProductId(1);
+    public void testAddOrderDetails() throws Exception {
+        ProductForm productForm = new ProductForm();
+        productForm.setBarcode("bar123");
+        productForm.setBrandCategory(1);
+        productForm.setProductName("testing");
+        productForm.setMrp(12.00);
+        productDto.add(productForm);
+        ProductData productData = productDto.getCheck("bar123");
+        InventoryForm inventoryForm = new InventoryForm();
+        inventoryForm.setBarcode("bar123");
+        inventoryForm.setProductId(productData.getProductId());
+        inventoryForm.setQuantity(1000);
+        inventoryDto.add(inventoryForm);
+        List<OrderListForm> forms = new ArrayList<OrderListForm>();
+        OrderListForm form = new OrderListForm();
+        form.setBarcode("bar123");
+        form.setProductId(1);
         Integer productId = form.getProductId();
-    	form.setProductName("testing");
-    	form.setQuantity(10);
-    	form.setSellingPrice(10.00);
-    	form.setAmount(form.getSellingPrice()*form.getQuantity());
-    	forms.add(form);
-    	dto.addOrderDetails(forms);
-    	assertEquals(dto.getAllOrderDetails().get(0).getBarcode(),"bar123");
+        form.setProductName("testing");
+        form.setQuantity(10);
+        form.setSellingPrice(10.00);
+        form.setAmount(form.getSellingPrice() * form.getQuantity());
+        forms.add(form);
+        dto.addOrderDetails(forms);
+        assertEquals(dto.getAllOrderDetails().get(0).getBarcode(), "bar123");
     }
 
 
@@ -273,5 +273,5 @@ public class OrderDtoTest extends AbstractUnitTest {
         o.setSellingPrice(5.00);
         return o;
     }
-    
+
 }

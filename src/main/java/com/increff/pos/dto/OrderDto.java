@@ -209,7 +209,6 @@ public class OrderDto {
 
     public void createInvoice(HttpServletResponse response, Integer orderId) throws Exception {
         try {
-
             FopFactory fopFactory = FopFactory.newInstance(new File(".").toURI());
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -220,16 +219,12 @@ public class OrderDto {
             Result res = new SAXResult(fop.getDefaultHandler());
             // Setup input
             Source src = new StreamSource(new File("./src/main/resources/com/increff/pos/invoice" + orderId + ".xml"));
-
             transformer.transform(src, res);
             response.setContentType("application/pdf");
             response.setContentLength(out.size());
-
             response.getOutputStream().write(out.toByteArray());
             response.getOutputStream().flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {e.printStackTrace();}
     }
 
 

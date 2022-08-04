@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="OrderItem") //TODO to add unique constraint.
+@Table(name="OrderItem")
 public class OrderItemsPojo {
 	
 	@Id

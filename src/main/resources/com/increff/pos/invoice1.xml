@@ -1,1 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><InvoiceData><invoice><sno>1</sno><name>firestickaaa...</name><qty>10</qty><mrp>10.0</mrp><totalPrice>100.0</totalPrice></invoice><totalAmount>100.0</totalAmount><time>2022-08-02T12:30:05</time><ID>1</ID></InvoiceData>
+<?xml version="1.0" encoding="UTF-8"?>
+<InvoiceData>
+    <invoice>
+        <sno>1</sno>
+        <name>firestickaaa...</name>
+        <qty>10</qty>
+        <mrp>10.0</mrp>
+        <totalPrice>100.0</totalPrice>
+    </invoice>
+    <totalAmount>100.0</totalAmount>
+    <time>2022-08-02T12:30:05</time>
+    <ID>1</ID>
+</InvoiceData>

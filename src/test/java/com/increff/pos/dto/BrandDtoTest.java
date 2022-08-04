@@ -155,5 +155,13 @@ public class BrandDtoTest extends AbstractUnitTest {
 		catch(Exception e) {
 			assertEquals("Category Can't be empty",e.getMessage());
 		}
+		try {
+			brandForm.setBrand(null);
+			brandForm.setCategory("dairy");
+			dto.update(2,brandForm);
+		}
+		catch(Exception e) {
+			assertEquals("Brand Can't be empty",e.getMessage());
+		}
 	}
 }
